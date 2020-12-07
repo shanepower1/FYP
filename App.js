@@ -5,21 +5,30 @@ import AddEvent from "./components/AddEvent"
 import Events from "./components/Events"
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from "@react-navigation/stack"
 import { StyleSheet } from 'react-native';
 import { ThemeProvider, Button, Header } from 'react-native-elements'
 import Register from "./components/Register"
 import About from "./components/About"
 
-
-
-
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const theme = {
   Button: {
     color: "red",
    
  },
+}
+
+function TabNavigation() {
+  return (
+    <Tab.Navigator initialRouteName="Events">    
+      <Tab.Screen name="About" component={About} />
+      <Tab.Screen name="Register" component={Register} />
+      <Tab.Screen name="Events" component={Events}/>   
+    </Tab.Navigator>
+  )
 }
 
 export default function App() {
@@ -38,12 +47,9 @@ return (
             style: { color: '#fff' } }}
             rightComponent={{ icon: 'home', color: '#fff' }}/>
           
-          <Tab.Navigator initialRouteName="Events">    
-            <Tab.Screen name="About" component={About} />
-            <Tab.Screen name="Register" component={Register} />
-            <Tab.Screen name="Add Event" component={AddEvent} />
-            <Tab.Screen name="Events" component={Events}/>   
-          </Tab.Navigator>
+          <Stack.Navigator mode="modal" headerMode="none">
+            <Stack.Screen name="Add Event" component={AddEvent} />
+          </Stack.Navigator>
         </NavigationContainer> 
     </ThemeProvider>
   )

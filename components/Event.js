@@ -5,7 +5,9 @@ import { Text, Card } from "react-native-elements"
 function Event (props) {
     return (
             <Card>
-                <Text>Event</Text>
+                <Text>{props.event.id}</Text>
+                <Text>{props.event.eventName}</Text>
+                <Text>{props.event.eventLocation}</Text>
             </Card>
         
     )

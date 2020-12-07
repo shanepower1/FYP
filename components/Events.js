@@ -4,9 +4,9 @@ import { Card, ListItem, Avatar } from "react-native-elements"
 import { Button, View } from "react-native"
 import Event from "./Event"
 
-function Events() {
+function Events({navigation}) {
     const [events, setEvents] = useState([])
-    const [selectedEvent, setSelectedEvent] = useState(0)
+    const [selectedEvent, setSelectedEvent] = useState(null)
 
     useEffect(() => {
         getEvents()
@@ -38,10 +38,11 @@ function Events() {
     //List Item used to display rows of Information , code got off of react native documentation https://reactnativeelements.com/docs/listitem
     return (
         <View>
+            <Button title="Add Event" onPress={() => navigation.navigate("Add Event")} />
             <Card>
             {
                 /* events.map((item, i) => (
-                    <ListItem key={i} bottomDivider onPress={() => setSelectedEvent(item.id)}>
+                    <ListItem key={i} bottomDivider onPress={() => setSelectedEvent(item)}>
                         <Avatar source={{uri: item.img_url}} />
                         <ListItem.Content>
                         <ListItem.Title>{item.eventName}</ListItem.Title>
@@ -51,11 +52,11 @@ function Events() {
                         <Button title="X" />
                     </ListItem>
                     
-                ))   */
+                ))   */ 
             }
             </Card>
             <Card>
-{/*                 <Event id={selectedEvent} />
+{/*                 <Event event={selectedEvent} />
  */}            </Card>
         </View>   
     )
