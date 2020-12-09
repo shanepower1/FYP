@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 
 //Whatever text is entered to the input box will be set the the database attributes
 
-function AddEvent() {
+function AddEvent({navigation}) {
     const [eventName, setEventName] = useState("")
     const [eventLocation, setEventLocation] = useState("")
     const [eventDate, setEventDate] = useState ("")
@@ -23,7 +23,7 @@ function AddEvent() {
                 eventLocation: eventLocation,
                 eventDate: eventDate
             }).then(() => {
-                alert("Success")
+                navigation.navigate("Events")
             }).catch(error => {
                 alert(error.message)
             })

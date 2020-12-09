@@ -1,14 +1,27 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import { View } from "react-native"
 import { Text, Card } from "react-native-elements"
+import { db } from "../firebase"
 
-function Event (props) {
+function Event ({navigation, route}) {
+    const [event, setEvent] = useState([])
+
+    useEffect(() => {
+        db.collection("events").doc(route.params.eventId).get()
+        .then(doc => {
+            setEvent(doc.data())
+            console.log("hello")
+        }).catch(error => {
+            console.log(error.message)
+        })
+    }, [])
+
     return (
-            <Card>
-                <Text>{props.event.id}</Text>
-                <Text>{props.event.eventName}</Text>
-                <Text>{props.event.eventLocation}</Text>
-            </Card>
+        <Card>
+            <Card.Title>{event.eventName}</Card.Title>
+            <Text>{event.eventDate}</Text>
+            <Text>{event.eventLocation}</Text>
+       </Card>
         
     )
 }
