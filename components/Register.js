@@ -1,26 +1,38 @@
-import React from "react"
+import React, {useState} from "react"
 import { Button ,Input, Card} from "react-native-elements"
+import {auth, db} from "../firebase"
 
+function Register({navigation}) { 
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
 
+    function RegisterAccount (){
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(result => {
+            AddUserInfo(result.user.uid)
+          }).catch(error => {
+          alert(error.message)
+        })
+    }
 
+    function AddUserInfo(id) {
+      db.collection("users").doc(id).set({
+        name: name
+      })
+    }
 
-
-function Register() { 
-  
-//Code got from react native documentation https://reactnativeelements.com/docs/input
+    //Code got from react native documentation https://reactnativeelements.com/docs/input
     return (
+      <Card>     
+        <Input placeholder="Name" value={name} onChangeText={text => setName(text)}/>
+        <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
+        <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
+        <Card.Title onPress={() => navigation.navigate("Login")}>Back To Login</Card.Title>
 
-      <Card>
-        
-            <Input placeholder="First Name"/>
-            <Input placeholder="Second Name"/>
-            <Input placeholder="Address"/>
-            <Input placeholder="Phone Number"/>
-            <Input placeholder="Password"/>
-            <Button title="Register"/> 
-
-            </Card>
-              )
-            }
+        <Button title="Register" onPress={RegisterAccount}/> 
+      </Card>
+    )
+}
   
 export default Register

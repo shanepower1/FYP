@@ -15,7 +15,6 @@ function AddEvent({navigation}) {
     const [eventDate, setEventDate] = useState ("")
     
 //Adding event to firebase
-
     function addEvent() {
         db.collection("events").doc()
             .set({

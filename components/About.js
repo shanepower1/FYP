@@ -15,13 +15,18 @@ function About() {
              type='facebook'/>
               <SocialIcon
              type='instagram'/>
+
            
             <Input placeholder="Email"/>
             <Input placeholder="Password"/>
             <Button title="Login"/>
+            <Input placeholder="Have You Registered?"/>
+            <Button title="Register"/>
+            
                  
                           
         </Card>
+        
 
     )
 }

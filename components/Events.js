@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+    import React, {useState, useEffect} from "react"
 import { db } from "../firebase"
 import { Card, ListItem, Avatar } from "react-native-elements"
 import { Button, View } from "react-native"
@@ -10,6 +10,8 @@ function Events({navigation}) {
     useEffect(() => {
         getEvents()
     }, [])
+
+//Getting the event information from firebase and displaying it.
 
     function getEvents() {
         db.collection("events").get()
@@ -28,6 +30,7 @@ function Events({navigation}) {
             console.error(error.message)
         }) 
     }
+        //Function to delete event using the events ID.
 
     function deleteEvent(id) {
         db.collection("events").doc(id).delete()
@@ -59,6 +62,7 @@ function Events({navigation}) {
                 ))  
             }
             </Card>
+    
             <Button title="Refresh" onPress={() => getEvents()} />
         </View>   
     )
