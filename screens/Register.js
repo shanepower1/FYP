@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { Button ,Input, Card} from "react-native-elements"
 import {auth, db} from "../firebase"
+import MyView from "../components/MyView"
 
 function Register({navigation}) { 
     const [email, setEmail] = useState("")
@@ -24,6 +25,7 @@ function Register({navigation}) {
 
     //Code got from react native documentation https://reactnativeelements.com/docs/input
     return (
+      <MyView>
       <Card>     
         <Input placeholder="Name" value={name} onChangeText={text => setName(text)}/>
         <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
@@ -32,6 +34,7 @@ function Register({navigation}) {
 
         <Button title="Register" onPress={RegisterAccount}/> 
       </Card>
+      </MyView>
     )
 }
   

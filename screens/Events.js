@@ -2,6 +2,7 @@
 import { db } from "../firebase"
 import { Card, ListItem, Avatar } from "react-native-elements"
 import { Button, View } from "react-native"
+import MyView from "../components/MyView"
 
 function Events({navigation}) {
     const [events, setEvents] = useState([])
@@ -43,7 +44,7 @@ function Events({navigation}) {
     
     //List Item used to display rows of Information , code got off of react native documentation https://reactnativeelements.com/docs/listitem
     return (
-        <View>
+        <MyView>
             <Button title="Add Event" onPress={() => navigation.navigate("Add Event")} />
             <Card>
             {
@@ -64,7 +65,7 @@ function Events({navigation}) {
             </Card>
     
             <Button title="Refresh" onPress={() => getEvents()} />
-        </View>   
+        </MyView>   
     )
 }
 

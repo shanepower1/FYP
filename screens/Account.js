@@ -1,6 +1,7 @@
 import React from "react"
 import {Card,Button} from "react-native-elements"
 import {auth} from "../firebase"
+import MyView from "../components/MyView"
 
 function Account ({navigation}){
     function signOut (){
@@ -10,9 +11,11 @@ function Account ({navigation}){
     }
 
     return (
+        <MyView>
         <Card>
             <Button title="Sign Out" onPress={signOut} />            
         </Card>
+        </MyView>
     )
 }
 

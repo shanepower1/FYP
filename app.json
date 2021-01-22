@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "ShaneFYP",
-    "slug": "ShaneFYP",
+    "name": "shane-fyp",
+    "slug": "shane-fyp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2F0B29"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
