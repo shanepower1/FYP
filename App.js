@@ -18,6 +18,7 @@ import Account from "./screens/Account"
 import AddEvent from "./screens/AddEvent"
 import Events from "./screens/Events"
 import Community from "./screens/Community"
+import EventList from "./screens/EventList"
 
 
 const Stack = createStackNavigator();
@@ -55,13 +56,13 @@ function TabNavigation() {
         tabBarIcon: () => <FontAwesome5 name="home" size={size} color={color} />
       }}/> 
       <Tab.Screen name="Events" component={Events} options={{
-        tabBarIcon: () => <FontAwesome5 name="users" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={size} color={color} />
       }}/> 
       <Tab.Screen name="Community" component={Community} options={{
-        tabBarIcon: () => <FontAwesome5 name="cog" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="users" size={size} color={color} />
       }}/>  
       <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="users" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="power-off" size={size} color={color} />
       }}/> 
     </Tab.Navigator>
   )
@@ -87,6 +88,7 @@ return (
               }} component={TabNavigation} />
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
+            <Stack.Screen name="Event List" component={EventList} />
             <Stack.Screen name="Register" options={{headerShown: false}} component={Register}/>
           </Stack.Navigator>
         </NavigationContainer> 

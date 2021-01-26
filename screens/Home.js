@@ -6,11 +6,10 @@ import MyView from "../components/MyView"
 function Home() {
     return (
         <MyView>        
-           <Card containerStyle={{backgroundColor: "red", color: "white", height: 150}}>Upcoming Events</Card>
-           <Card containerStyle={{backgroundColor: "red", color: "white", height: 150}}>Other Stuff</Card>
-           <Card containerStyle={{backgroundColor: "red", color: "white", height: 150}}>Other Stuff</Card>
+            <Card>
+                <Text>Welcome</Text>
+            </Card>
         </MyView>
-
     )
 }
   

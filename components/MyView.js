@@ -1,18 +1,21 @@
 import React from "react"
-import {ScrollView} from "react-native"
+import {ScrollView, SafeAreaView} from "react-native"
 
 function MyView({children}) {
     return (
-        <ScrollView  
-            contentContainerStyle={{
-                padding: 10,
-                backgroundColor: "white",
-                minHeight: "100%",
-             
-            }}
-        >
-            {children}
-        </ScrollView>
+        <SafeAreaView>
+            <ScrollView  
+                contentContainerStyle={{
+                    padding: 10,
+                    backgroundColor: "white",
+                    minHeight: "100%",
+                
+                }}
+            >
+                {children}
+            </ScrollView>
+        </SafeAreaView>
+       
     )
 }
 

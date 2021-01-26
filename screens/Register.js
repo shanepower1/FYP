@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Button ,Input, Card} from "react-native-elements"
+import { Button ,Input, Card, Text} from "react-native-elements"
 import {auth, db} from "../firebase"
 import MyView from "../components/MyView"
 
@@ -8,7 +8,8 @@ function Register({navigation}) {
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
 
-    function RegisterAccount (){
+    //Code got from https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
+      function RegisterAccount (){
       auth.createUserWithEmailAndPassword(email, password)
         .then(result => {
             AddUserInfo(result.user.uid)
@@ -30,8 +31,9 @@ function Register({navigation}) {
         <Input placeholder="Name" value={name} onChangeText={text => setName(text)}/>
         <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
         <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
-        <Card.Title onPress={() => navigation.navigate("Login")}>Back To Login</Card.Title>
-
+        <Card.Title onPress={() => navigation.navigate("Login")}>
+          <Text>Back To Login</Text>            
+        </Card.Title>
         <Button title="Register" onPress={RegisterAccount}/> 
       </Card>
       </MyView>

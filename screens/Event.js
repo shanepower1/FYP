@@ -22,7 +22,9 @@ function Event ({ route}) {
         //Currently returning the below event attributes, however as developmenet progresses it will display more
     return (
         <Card>
-            <Card.Title>{event.eventName}</Card.Title>
+            <Card.Title>
+                <Text>{event.eventName}</Text>
+            </Card.Title>
             <Text>{event.eventDate}</Text>
             <Text>{event.eventLocation}</Text>
        </Card>

@@ -1,72 +1,46 @@
-    import React, {useState, useEffect} from "react"
-import { db } from "../firebase"
-import { Card, ListItem, Avatar } from "react-native-elements"
-import { Button, View } from "react-native"
+import React from "react"
+import { StyleSheet, TouchableOpacity } from "react-native"
+import { Card, Text } from "react-native-elements"
 import MyView from "../components/MyView"
 
 function Events({navigation}) {
-    const [events, setEvents] = useState([])
-    const [selectedEvent, setSelectedEvent] = useState(null)
-
-    useEffect(() => {
-        getEvents()
-    }, [])
-
-//Getting the event information from firebase and displaying it.
-
-    function getEvents() {
-        db.collection("events").get()
-        .then(docs => {
-            var list = []
-            docs.forEach(doc => {
-                var temp = doc.data()
-                temp.id = doc.id
-                list.push(temp) 
-            })  
-
-            setEvents(list)
-            console.log(events) 
-
-         }).catch(error => {
-            console.error(error.message)
-        }) 
-    }
-        //Function to delete event using the events ID.
-
-    function deleteEvent(id) {
-        db.collection("events").doc(id).delete()
-            .then(() => {
-                getEvents()
-            }).catch(error => {
-                console.log(error.message)
-            })
-    }
-    
     //List Item used to display rows of Information , code got off of react native documentation https://reactnativeelements.com/docs/listitem
+    const height = 100
     return (
-        <MyView>
-            <Button title="Add Event" onPress={() => navigation.navigate("Add Event")} />
-            <Card>
-            {
-                events.map((item, i) => (
-                    <ListItem key={i} bottomDivider onPress={() => navigation.navigate("Event", {
-                        eventId : item.id
-                    })}>
-                        <Avatar source={{uri: item.img_url}} />
-                        <ListItem.Content>
-                        <ListItem.Title>{item.eventName}</ListItem.Title>
-                        <ListItem.Subtitle>{item.eventDate}</ListItem.Subtitle>
-                        </ListItem.Content>
-                        <Button title="X" onPress={() => deleteEvent(item.id)}/>
-                    </ListItem>
-                    
-                ))  
-            }
-            </Card>
-    
-            <Button title="Refresh" onPress={() => getEvents()} />
-        </MyView>   
+        <MyView>  
+            <TouchableOpacity onPress={() => navigation.navigate("Event List", {
+                type: "upcoming"
+            })}>
+                <Card containerStyle={{backgroundColor: "#EE4036", height: height}}>
+                    <Text style={styles.text}>Upcoming Events</Text>
+                </Card>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Event List", {
+                type: "previous"
+            })}>
+                <Card containerStyle={{backgroundColor: "#262261", height: height}}>     
+                    <Text style={styles.text}>Previous Events</Text>
+                </Card>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Event List", {
+                type: "live" 
+            })}>
+                <Card containerStyle={{backgroundColor: "#FAAF40", height: height}}>
+                    <Text style={styles.text}>Live on the App</Text>
+                </Card>
+            </TouchableOpacity>
+        </MyView>
     )
 }
 
 export default Events
+
+const styles = StyleSheet.create({
+    text: {
+        color: "white"
+    }
+});
+
+
+
+  
