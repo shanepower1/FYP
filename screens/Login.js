@@ -3,12 +3,18 @@ import { Button, Input, Card, Text } from "react-native-elements"
 import {auth} from "../firebase"
 import MyView from "../components/MyView"
 
-function Login({navigation}) { 
+function Login({navigation}) {
+
+    // https://reactjs.org/docs/hooks-state.html
+    // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
+    // "set" function is used to update the state in the future when changed.
+    // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
+     
     const [email, setEmail] = useState("spower41@gmail.com")
     const [password, setPassword] = useState("shanepower1")
     const [isLoading, setIsLoading] = useState(false)
     
-    //Code got from https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
+    // https://firebase.google.com/docs/auth/web/password-auth
     function signIn(){
         setIsLoading(true)
         auth.signInWithEmailAndPassword(email, password)
@@ -22,6 +28,9 @@ function Login({navigation}) {
     }
     
     //Code got from react native documentation https://reactnativeelements.com/docs/input
+    //Inputs allow the user to enter text into the UI.
+    //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
+    //of the email and password variables.
     return (
         <MyView>
             <Card>     

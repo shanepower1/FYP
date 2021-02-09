@@ -1,21 +1,22 @@
 import React from "react"
 import {ScrollView, SafeAreaView} from "react-native"
 
+// Children are the components that are wrapped by MyView.
 function MyView({children}) {
     return (
-        <SafeAreaView>
+        // https://reactnative.dev/docs/safeareaview
+        // Prevents content being covered by status bar, toolbars etc. on IOS devices. Renders all content within boundary of device.
+        <SafeAreaView>      
             <ScrollView  
                 contentContainerStyle={{
                     padding: 10,
                     backgroundColor: "white",
-                    minHeight: "100%",
-                
+                    minHeight: "100%",  
                 }}
             >
-                {children}
+                {children} 
             </ScrollView>
-        </SafeAreaView>
-       
+        </SafeAreaView>     
     )
 }
 

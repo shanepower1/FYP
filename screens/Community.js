@@ -1,19 +1,20 @@
 import React from "react"
 import { Card, Text } from "react-native-elements"
+import {StyleSheet} from "react-native"
 import MyView from "../components/MyView"
 
 
 function Community() {
     return (
         <MyView>
-           <Card containerStyle={{backgroundColor: "blue", color: "white", height: 150}}>
-               <Text>Online Meeting</Text>
+           <Card containerStyle={{backgroundColor: "#EE4036", color: "white", height: 150}}>
+               <Text style={styles.text}> Online Meeting</Text>
             </Card>
-           <Card containerStyle={{backgroundColor: "red", color: "white", height: 150}}>
-               <Text>Tips</Text>       
+           <Card containerStyle={{backgroundColor: "#262261", color: "white", height: 150}}>
+               <Text style={styles.text}>Meet a friend</Text>       
             </Card>
-           <Card containerStyle={{backgroundColor: "yellow", color: "white", height: 150}}>
-               <Text>other</Text>
+           <Card containerStyle={{backgroundColor: "#FAAF40", color: "white", height: 150}}>
+               <Text style={styles.text}>Q&A</Text>
             </Card>                                  
         </MyView>
     )
@@ -21,3 +22,8 @@ function Community() {
   
 
 export default Community
+const styles = StyleSheet.create({
+    text:{
+        color:"white"
+    }
+});

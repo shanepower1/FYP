@@ -8,7 +8,7 @@ function Register({navigation}) {
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
 
-    //Code got from https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
+    // https://firebase.google.com/docs/auth/web/password-auth
       function RegisterAccount (){
       auth.createUserWithEmailAndPassword(email, password)
         .then(result => {
@@ -18,6 +18,7 @@ function Register({navigation}) {
         })
     }
 
+    // Add documents with same id as newly created user to store user info. 
     function AddUserInfo(id) {
       db.collection("users").doc(id).set({
         name: name
@@ -25,6 +26,9 @@ function Register({navigation}) {
     }
 
     //Code got from react native documentation https://reactnativeelements.com/docs/input
+    //Inputs allow the user to enter text into the UI.
+    //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
+    //of the name, email and password variables.
     return (
       <MyView>
       <Card>     

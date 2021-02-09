@@ -4,10 +4,13 @@ import { Card, Text } from "react-native-elements"
 import MyView from "../components/MyView"
 
 function Events({navigation}) {
-    //List Item used to display rows of Information , code got off of react native documentation https://reactnativeelements.com/docs/listitem
+    
     const height = 100
     return (
         <MyView>  
+            {/* https://reactnative.dev/docs/touchableopacity */}
+            {/* https://reactnavigation.org/docs/params/ */}
+
             <TouchableOpacity onPress={() => navigation.navigate("Event List", {
                 type: "upcoming"
             })}>

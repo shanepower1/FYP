@@ -20,27 +20,23 @@ import Events from "./screens/Events"
 import Community from "./screens/Community"
 import EventList from "./screens/EventList"
 
-
+//https://reactnative.dev/docs/navigation#react-navigation
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 const theme = {
   Button: {
-    color: "red",
-   
+    color: "red",  
  },
 }
-// Adding Navbar to screen to navigate between screens.
- //Installed react navigation. Code got from react native documents//
 
- 
 function TabNavigation() {
   const size=24
   const color="white"
-
+//Adding bottom Navbar to navigate between screens assigned to the Navbar
   return (
     <Tab.Navigator 
-      initialRouteName="Home" 
+      initialRouteName="Events" 
       shifting={true} 
       tabBarPosition="bottom" 
       tabBarOptions={{
@@ -51,12 +47,12 @@ function TabNavigation() {
         indicatorStyle: {
           backgroundColor: "orange",
         }
-    }}>   
-      <Tab.Screen name="Home" component={Home} options={{
-        tabBarIcon: () => <FontAwesome5 name="home" size={size} color={color} />
-      }}/> 
+    }}>  
+       {/*https://reactnavigation.org/docs/tab-based-navigation*/}
+       {/*Adding icons to the tab navigator*/}
+      
       <Tab.Screen name="Events" component={Events} options={{
-        tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="home" size={size} color={color} />
       }}/> 
       <Tab.Screen name="Community" component={Community} options={{
         tabBarIcon: () => <FontAwesome5 name="users" size={size} color={color} />
@@ -71,20 +67,23 @@ function TabNavigation() {
 export default function App() {
   const [text, setText] = useState('');
 
-//Code off react naitve documentation
+
     const backgroundColor= "#2F0B29"
+
+    //https://reactnative.dev/docs/navigation#react-navigation
+    // Navigation added to manage the transition between multiple screens
 return (
     <ThemeProvider theme={theme}>
         <NavigationContainer> 
-          <Stack.Navigator mode="modal">
+          <Stack.Navigator mode="modal" initialRouteName="Login">
             <Stack.Screen name="Login" options={{headerShown: false}} component={Login}/>
             <Stack.Screen name="Main" 
               options={{
                 headerShown: true, 
                 headerStyle: {
-                  backgroundColor:"#2F0B29",
-                  color: "white"
-                }
+                  backgroundColor:"#2F0B29"
+                },
+                headerTintColor: '#fff',
               }} component={TabNavigation} />
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
