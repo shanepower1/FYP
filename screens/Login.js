@@ -1,7 +1,9 @@
 import React, {useState} from "react"
-import { Button, Input, Card, Text } from "react-native-elements"
+import {  Button, Input, Card, Text, Image } from "react-native-elements"
 import {auth} from "../firebase"
+import {ImageBackground, StyleSheet} from "react-native"
 import MyView from "../components/MyView"
+import { SafeAreaView } from "react-native"
 
 function Login({navigation}) {
 
@@ -33,7 +35,10 @@ function Login({navigation}) {
     //of the email and password variables.
     return (
         <MyView>
-            <Card>     
+            <SafeAreaView>
+           <ImageBackground source={require('../assets/logo.png')} style={styles.backgroundImage} >
+        </ImageBackground>
+            <Card>    
                 <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
                 <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
                 <Card.Title onPress={() => navigation.navigate("Register")}>
@@ -41,8 +46,21 @@ function Login({navigation}) {
                 </Card.Title>
                 <Button title="Login" onPress={signIn} loading={isLoading}/> 
             </Card>
+            </SafeAreaView>
         </MyView>
     )
 }
   
 export default Login
+
+const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        width: 400,
+        height: 400,
+        flexDirection: 'column',
+        backgroundColor:'transparent',
+        justifyContent: 'flex-start',
+    
+    
+    },})

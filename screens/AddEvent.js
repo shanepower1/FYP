@@ -17,15 +17,18 @@ function AddEvent({navigation}) {
     const [eventName, setEventName] = useState("")
     const [eventLocation, setEventLocation] = useState("")
     const [eventDate, setEventDate] = useState(new Date())
+    const [eventInfo, setEventInfo] = useState("")
     
     // https://firebase.google.com/docs/firestore/manage-data/add-data#web
     // Adds a new event document to the Events collection in Firestore. 
+    // 
     function addEvent() {
         db.collection("events").doc()
             .set({
                 eventName: eventName.trim(), // trim removes whitespace before and after
                 eventLocation: eventLocation.trim(),
-                eventDate: eventDate
+                eventDate: eventDate,
+                eventInfo: eventInfo
             }).then(() => {
                 navigation.navigate("Events")
             }).catch(error => {
@@ -41,8 +44,10 @@ function AddEvent({navigation}) {
         <Card>
             <Input style={styles.textInput} onChangeText={text => setEventName(text)} value={eventName}/> 
             <Input style={styles.textInput} onChangeText={text => setEventLocation(text)} value={eventLocation}/>
+            <Input style={styles.textInput} onChangeText={text => setEventInfo(text)} value={eventInfo}/>
 
             {/* https://github.com/react-native-datetimepicker/datetimepicker */}
+            {/*Allows the admin to choose a date and time for each event, N.B - this is not compatible with web*/}
             <DateTimePicker
                 value={eventDate}
                 mode={"datetime"}

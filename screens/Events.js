@@ -5,7 +5,7 @@ import MyView from "../components/MyView"
 
 function Events({navigation}) {
     
-    const height = 100
+    const height = 200
     return (
         <MyView>  
             {/* https://reactnative.dev/docs/touchableopacity */}

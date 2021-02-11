@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { View } from "react-native"
+import { StyleSheet  } from "react-native"
 import { Text, Card } from "react-native-elements"
 import { db } from "../firebase"
 
@@ -19,15 +19,24 @@ function Event ({route}) {
     //Currently returning the below event attributes, however as developmenet progresses it will display more
     return (
         <Card>
-            <Text>Event</Text>
             <Card.Title>
-                <Text>{event.eventName}</Text>
+            <Text>{event.eventName}</Text>
             </Card.Title>
             <Text>{event.formattedDate}</Text>  
             <Text>{event.formattedTime}</Text>  
             <Text>{event.eventLocation}</Text> 
+            <Text>{event.eventInfo}</Text>
+            <Card containerStyle={{backgroundColor: "#FAAF40", color: "white", height: 50}}>
+               <Text style={styles.text}>Register</Text>       
+            </Card> 
+
        </Card>      
     )
 }
 
 export default Event
+const styles = StyleSheet.create({
+    text: {
+        color: "white"
+    }
+});

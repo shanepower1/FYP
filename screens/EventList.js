@@ -13,7 +13,7 @@ function EventList({navigation, route}) {
     const [events, setEvents] = useState([])
     const [filteredEvents, setFilteredEvents] = useState([])
     const [selectedCounty, setSelectedCounty] = useState("all")
-    const type = route.params.type // TODO
+    const type = route.params.type 
     
     // Runs when component is loaded, and only runs once even if component is updated. 
     useEffect(() => { 
@@ -21,13 +21,15 @@ function EventList({navigation, route}) {
     }, []) 
 
     // Runs code whenever county variable changes. 
+    // Only runs once
     useEffect(() => {
-        // If "all" is selcted in picker, set filtered events to full list of events. 
+        
+    // If "all" is selcted in picker, set filtered events to full list of events. 
         if(selectedCounty == "all") {
             setFilteredEvents(events)
         } 
         
-        // If a county is selected in picker, loop through events and only add events with selected county to filtered list. 
+     // If a county is selected in picker, loop through events and only add events with selected county to filtered list. 
         else {
             let tempList = []
             events.forEach(event => {                
@@ -42,8 +44,7 @@ function EventList({navigation, route}) {
     }, [selectedCounty]) 
 
     // https://firebase.google.com/docs/firestore/query-data/get-data.
-    //TODO
-    function getEvents(){
+         function getEvents(){
         db.collection("events").get()
             .then(docs => {
                 let tempList = []
@@ -79,6 +80,9 @@ function EventList({navigation, route}) {
     }
     
     return (
+        //https://reactnative.dev/docs/picker. 
+        //Picker will display all the possible counties where these events will occur
+        //User will be able to select the desired county and view upcoming events in that location
         <MyView>
             <View style={styles.container}>
                 <Picker

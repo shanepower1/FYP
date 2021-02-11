@@ -7,7 +7,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { StyleSheet } from 'react-native';
 import { ThemeProvider, Button, Header } from 'react-native-elements'
 import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 
 // My components
 import Register from "./screens/Register"
