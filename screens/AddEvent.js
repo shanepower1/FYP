@@ -8,27 +8,27 @@ const styles = StyleSheet.create({
 
 })
 
-function AddEvent({navigation}) {
+function AddGym({navigation}) {
     // https://reactjs.org/docs/hooks-state.html
     // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
     // "set" function is used to update the state in the future when changed.
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
     
-    const [eventName, setEventName] = useState("")
-    const [eventLocation, setEventLocation] = useState("")
-    const [eventDate, setEventDate] = useState(new Date())
-    const [eventInfo, setEventInfo] = useState("")
+    const [gymName, setGymName] = useState("")
+    const [gymLocation, setGymLocation] = useState("")
+    const [gymEmail, setGymEmail] = useState("")
+    const [gymSignUpDate, setGymSignUpDate] = useState(new Date())
     
     // https://firebase.google.com/docs/firestore/manage-data/add-data#web
     // Adds a new event document to the Events collection in Firestore. 
     // 
-    function addEvent() {
+    function AddGym() {
         db.collection("events").doc()
             .set({
-                eventName: eventName.trim(), // trim removes whitespace before and after
-                eventLocation: eventLocation.trim(),
-                eventDate: eventDate,
-                eventInfo: eventInfo
+                gymName: gymName,
+                gymLocation: gymLocation.trim(),// trim removes whitespace before and after
+                gymEmail: gymEmail,
+                gymSignUpDate:GymSignUpDate
             }).then(() => {
                 navigation.navigate("Events")
             }).catch(error => {
@@ -42,9 +42,9 @@ function AddEvent({navigation}) {
     //value of the eventName and eventLocation variables.
     return (
         <Card>
-            <Input style={styles.textInput} onChangeText={text => setEventName(text)} value={eventName}/> 
-            <Input style={styles.textInput} onChangeText={text => setEventLocation(text)} value={eventLocation}/>
-            <Input style={styles.textInput} onChangeText={text => setEventInfo(text)} value={eventInfo}/>
+            <Input style={styles.textInput} onChangeText={text => setGymName(text)} value={gymName}/> 
+            <Input style={styles.textInput} onChangeText={text => setGymLocation(text)} value={gymLocation}/>
+            <Input style={styles.textInput} onChangeText={text => setGymEmail(text)} value={gymEmail}/>
 
             {/* https://github.com/react-native-datetimepicker/datetimepicker */}
             {/*Allows the admin to choose a date and time for each event, N.B - this is not compatible with web*/}
@@ -52,12 +52,12 @@ function AddEvent({navigation}) {
                 value={eventDate}
                 mode={"datetime"}
                 display="default"
-                onChange={(event, date) => setEventDate(date)}
+                onChange={(Gym, date) => setGymSignUpDate(date)}
             />
 
-            <Button onPress={addEvent} title="Add Event"  />   
+            <Button onPress={AddGym} title="Add Your Gym"  />   
         </Card>  
     )
 }  
 
-export default AddEvent
+export default AddGym

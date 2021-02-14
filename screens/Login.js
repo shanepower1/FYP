@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {  Button, Input, Card, Text, Image } from "react-native-elements"
 import {auth} from "../firebase"
-import {ImageBackground, StyleSheet} from "react-native"
+import { StyleSheet} from "react-native"
 import MyView from "../components/MyView"
 import { SafeAreaView } from "react-native"
 
@@ -36,8 +36,6 @@ function Login({navigation}) {
     return (
         <MyView>
             <SafeAreaView>
-           <ImageBackground source={require('../assets/logo.png')} style={styles.backgroundImage} >
-        </ImageBackground>
             <Card>    
                 <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
                 <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>

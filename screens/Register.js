@@ -20,6 +20,7 @@ function Register({navigation}) {
     }
 
     // Add documents with same id as newly created user to store user info. 
+    //This is the information that will be stored in the database on each newly created user.
     function AddUserInfo(id) {
       db.collection("users").doc(id).set({
         name: name,

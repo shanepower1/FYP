@@ -4,7 +4,7 @@ import { Card, ListItem, Avatar, Text } from "react-native-elements"
 import { Button, View, Picker, StyleSheet } from "react-native"
 import MyView from "../components/MyView"
 
-function EventList({navigation, route}) {
+function GymList({navigation, route}) {
     // https://reactjs.org/docs/hooks-state.html
     // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
     // "set" function is used to update the state in the future when changed.
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
       }
 });
 
-export default EventList
+export default GymList

@@ -11,25 +11,25 @@ function Events({navigation}) {
             {/* https://reactnative.dev/docs/touchableopacity */}
             {/* https://reactnavigation.org/docs/params/ */}
 
-            <TouchableOpacity onPress={() => navigation.navigate("Event List", {
-                type: "upcoming"
+            <TouchableOpacity onPress={() => navigation.navigate("Events", {
+                type: "timetable"
             })}>
                 <Card containerStyle={{backgroundColor: "#EE4036", height: height}}>
-                    <Text style={styles.text}>Upcoming Events</Text>
+                    <Text style={styles.text}>Timetable-Book Your Slot!</Text>
                 </Card>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Event List", {
-                type: "previous"
+            <TouchableOpacity onPress={() => navigation.navigate("Events", {
+                type: "classes"
             })}>
                 <Card containerStyle={{backgroundColor: "#262261", height: height}}>     
-                    <Text style={styles.text}>Previous Events</Text>
+                    <Text style={styles.text}>View Our Available Classes</Text>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Event List", {
-                type: "live" 
+                type: "upcoming" 
             })}>
                 <Card containerStyle={{backgroundColor: "#FAAF40", height: height}}>
-                    <Text style={styles.text}>Live on the App</Text>
+                    <Text style={styles.text}>See Some Of Our Upcoming Events</Text>
                 </Card>
             </TouchableOpacity>
         </MyView>
