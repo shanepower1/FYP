@@ -4,10 +4,10 @@ import {auth, db} from "../firebase"
 import MyView from "../components/MyView"
 
 function Register({navigation}) { 
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState
+    ("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
-    const [level, setLevel] = useState("")
 
     // https://firebase.google.com/docs/auth/web/password-auth
       function RegisterAccount (){
@@ -24,7 +24,6 @@ function Register({navigation}) {
     function AddUserInfo(id) {
       db.collection("users").doc(id).set({
         name: name,
-        level: level
 
       })
     }
@@ -38,7 +37,6 @@ function Register({navigation}) {
       <Card>     
         <Input placeholder="Name" value={name} onChangeText={text => setName(text)}/>
         <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
-        <Input placeholder="Level" value={level} onChangeText = {text => setLevel(text)}/>
         <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
         <Card.Title onPress={() => navigation.navigate("Login")}>
           <Text>Back To Login</Text>            

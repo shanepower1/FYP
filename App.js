@@ -1,12 +1,13 @@
   
 import React, { useState } from 'react';
-import { db } from "./firebase"
+import { db, auth } from "./firebase"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { StyleSheet } from 'react-native';
 import { ThemeProvider, Button, Header } from 'react-native-elements'
 import { FontAwesome5 } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 // My components
 import Register from "./screens/Register"
@@ -18,6 +19,8 @@ import AddEvent from "./screens/AddEvent"
 import Events from "./screens/Events"
 import Community from "./screens/Community"
 import EventList from "./screens/EventList"
+import RegisterGym from "./screens/RegisterGym"
+import GymList from "./screens/GymList"
 
 //https://reactnative.dev/docs/navigation#react-navigation
 const Stack = createStackNavigator();
@@ -74,22 +77,25 @@ export default function App() {
 return (
     <ThemeProvider theme={theme}>
         <NavigationContainer> 
-          <Stack.Navigator mode="modal" initialRouteName="Login">
-            <Stack.Screen name="Login" options={{headerShown: false}} component={Login}/>
+          <Stack.Navigator mode="modal" initialRouteName="Gym List">
+            <Stack.Screen name="Gym List" options={{headerShown: false}} component={GymList} />
+            <Stack.Screen name="Register Gym" component={RegisterGym} />
+            <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Main" 
               options={{
                 headerShown: true, 
                 headerStyle: {
                   backgroundColor:"#2F0B29"
-                },
+                }, 
                 headerTintColor: '#fff',
               }} component={TabNavigation} />
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
             <Stack.Screen name="Event List" component={EventList} />
-            <Stack.Screen name="Register" options={{headerShown: false}} component={Register}/>
+            <Stack.Screen name="Register" component={Register}/>
           </Stack.Navigator>
         </NavigationContainer> 
+        <StatusBar style="light" />
     </ThemeProvider>
   )
 }
