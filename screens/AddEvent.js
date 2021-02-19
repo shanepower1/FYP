@@ -18,19 +18,19 @@ function AddEvent({navigation}) {
     const [eventLocation, setEventLocation] = useState("")
     const [eventDate, setEventDate] = useState(new Date())
     const [eventInfo, setEventInfo] = useState("")
-    
+
     // https://firebase.google.com/docs/firestore/manage-data/add-data#web
     // Adds a new event document to the Events collection in Firestore. 
-    // 
+    // Adding the below attributes to the event document in the db with the assinged value entered in the UI in the relevant fields.
     function addEvent() {
-        db.collection("events").doc()
+        db.collection("events").doc() //*Left empty so firebase generates a random id  
             .set({
                 eventName: eventName,
                 eventLocation: eventLocation.trim(),// trim removes whitespace before and after
                 eventDate: eventDate,
                 eventInfo: eventInfo
             }).then(() => {
-                navigation.navigate("Events")
+                navigation.navigate("Events") 
             }).catch(error => {
                 alert(error.message)
             }) 
@@ -39,7 +39,7 @@ function AddEvent({navigation}) {
     //Code got from react native documentation https://reactnativeelements.com/docs/input
     //Inputs allow the user to enter text into the UI.
     //The "set" function used below allows the text entered into the input in the UI by the user to be set to the 
-    //value of the eventName and eventLocation variables.
+    //value of the eventName, eventLocation and event info variables.
     return (
         <Card>
             <Input style={styles.textInput} onChangeText={text => setEventName(text)} value={eventName}/> 

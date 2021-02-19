@@ -11,58 +11,35 @@ function EventList({navigation, route}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     const [events, setEvents] = useState([])
-    const [filteredEvents, setFilteredEvents] = useState([])
-    const [selectedCounty, setSelectedCounty] = useState("all")
-    const type = route.params.type 
     
     // Runs when component is loaded, and only runs once even if component is updated. 
+    //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => { 
         getEvents()
     }, []) 
 
-    // Runs code whenever county variable changes. 
-    // Only runs once
-    useEffect(() => {
-        
-    // If "all" is selcted in picker, set filtered events to full list of events. 
-        if(selectedCounty == "all") {
-            setFilteredEvents(events)
-        } 
-        
-     // If a county is selected in picker, loop through events and only add events with selected county to filtered list. 
-        else {
-            let tempList = []
-            events.forEach(event => {                
-                if(event.eventLocation == selectedCounty) {
-                    tempList.push(event)
-                } 
-            })
-            
-            setFilteredEvents(tempList)
-        }   
-    
-    }, [selectedCounty]) 
-
     // https://firebase.google.com/docs/firestore/query-data/get-data.
-         function getEvents(){
+    function getEvents(){
         db.collection("events").get()
             .then(docs => {
-                let tempList = []
+                let tempList = [] // Temporary array to store properly formatted event objects. 
+
+                // Loops through documents retrieved from Firebase. 
                 docs.forEach(doc => {
-                    let temp = doc.data()
-                    temp.id = doc.id
+                    let temp = doc.data() 
+                    temp.id = doc.id // Creating new field inside temp called id with the document id. 
                     
-                    let date = doc.data().eventDate.toDate()
+                    let date = doc.data().eventDate.toDate() // Converting timestamp to JavaScript date object. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
                     // Getting individual values from date object for day, month, and year. 
+                    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
                     temp.formattedDate = date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear() // Concatenating values together e.g. 21/1/20
                     temp.formattedTime = date.getHours() + ":" + date.getMinutes()
                     
                     tempList.push(temp)
                 })  
 
-                setEvents(tempList)
-                setFilteredEvents(tempList)
+                setEvents(tempList) // tempList is stored permanently in the events state variable. 
             }).catch(error => {
                 console.error(error.message)
             })    
@@ -80,38 +57,18 @@ function EventList({navigation, route}) {
     }
     
     return (
-        //https://reactnative.dev/docs/picker. 
-        //Picker will display all the possible counties where these events will occur
-        //User will be able to select the desired county and view upcoming events in that location
-        <MyView>
-            <View style={styles.container}>
-                <Picker
-                    selectedValue={selectedCounty}
-                    style={{height: 50, width: "100%"}}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setSelectedCounty(itemValue)
-                    }
-                >
-                    <Picker.Item label="All Counties" value="all"/>
-                    <Picker.Item label="Tipperary" value="Tipperary" />
-                    <Picker.Item label="Cork" value="Cork" />
-                    <Picker.Item label="Limerick" value="Limerick" />
-                    <Picker.Item label="Clare" value="Clare" />
-                    <Picker.Item label="Waterford" value="Waterford" />
-                    <Picker.Item label="Kerry" value="Kerry" />
-                </Picker>
-                
-            </View>
-             
+ 
+        <MyView>     
              <Button title="Add Event" onPress={() => navigation.navigate("Add Event")} />
              
             <Card> 
             {
-                // .map loops through the filteredEvents. 
+                // .map loops through the events and displays them one by one. 
                 // https://reactnativeelements.com/docs/listitem/
-                filteredEvents.map(event => (
+                //List Item used o display rows of relevent information
+                events.map(event => (
                     <ListItem key={event.id} bottomDivider onPress={() => navigation.navigate("Event", {
-                        event: event
+                        event: event, // Pass event object to Event.js where we can then display it. 
                     })}>
                         <Avatar source={{uri: event.img_url}} />
                         <ListItem.Content>

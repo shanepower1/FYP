@@ -14,11 +14,11 @@ function Login({navigation}) {
      
     const [email, setEmail] = useState("spower41@gmail.com")
     const [password, setPassword] = useState("shanepower1")
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)//Loading feature when button to sign in is clicked
     
     // https://firebase.google.com/docs/auth/web/password-auth
     function signIn(){
-        setIsLoading(true)
+        setIsLoading(true)//loading feature will appear
         auth.signInWithEmailAndPassword(email, password)
             .then(result => {
                 setIsLoading(false)
