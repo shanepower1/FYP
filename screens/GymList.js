@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react"
-import { db } from "../firebase"
+import { db, auth } from "../firebase"
 import { Card, ListItem, Text, SearchBar, Button, Input} from "react-native-elements"
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native"
+import { View, StyleSheet, TouchableOpacity, Image, Alert } from "react-native"
 import MyView from "../components/MyView"
+import Events from "./Events"
 
 // https://reactjs.org/docs/hooks-state.html
 // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
@@ -12,11 +13,22 @@ function GymList({navigation, route}) {
     const [gyms, setGyms] = useState([])
     const [filteredGyms, setFilteredGyms] = useState([])
     const [search, setSearch] = useState("")
-
+    const [showEvents, setShowEvents] = useState(false)
+    const [selectedGymId, setSelectedGymId] = useState([])
     // Runs once when the component is loaded. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => {
         getGyms()
+
+        db.collection("users").doc(auth.currentUser.uid).get()
+            .then(doc => {
+                if(doc.data().gymId == null) {
+                    setShowEvents(false)
+                } else {
+                    setShowEvents(true)
+                    setSelectedGymId(doc.data().gymId)
+                }
+            })
     }, [])
 
     // Runs once when component is loaded and every time the search variable changes.
@@ -52,40 +64,70 @@ function GymList({navigation, route}) {
             })
     } 
 
+    function joinGym(gymId) {
+        db.collection("users").doc(auth.currentUser.uid).update({
+            gymId: gymId
+        }).then(() => {
+            setShowEvents(true)
+            alert("Success")
+        }).catch(error => {
+            error.message
+        })
+    }
+
+    function joinAlert(gymName, gymId) {
+        Alert.alert(
+          gymName,
+          'Do you want to join?',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel'
+            },
+            { text: 'Join', onPress: () => joinGym(gymId) }
+          ],
+          { cancelable: false }
+        );
+      }
+    
     return (
         <MyView>
-            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginBottom: 20}}>
-                <Button title="Register Your Gym" onPress={() => navigation.navigate("Register Gym")} style={{width: 200}}/>
-                <Button title="Login" onPress={() => navigation.navigate("Login")} style={{width: 200}}/>
-            </View>
-
-            <View>
-             <Image source={require('../assets/reallogo.png')}/>   
-            </View>
-            <Input onChangeText={text => setSearch(text)} value={search} placeholder='Search' style={{color: "white"}} /> 
             {
-                // .map loops through the filteredGyms. 
-                // https://reactnativeelements.com/docs/listitem/
-                // Below is the infomration displayed on the gyms when searched for in the search bar
+                showEvents 
+                ?
+                <Events gymId={selectedGymId}/>
+                :
+                <>
+                <Input onChangeText={text => setSearch(text)} value={search} placeholder='Search' style={{color: "white"}} /> 
+                {
+                    // .map loops through the filteredGyms. 
+                    // https://reactnativeelements.com/docs/listitem/
+                    // Below is the infomration displayed on the gyms when searched for in the search bar
 
-                filteredGyms.map(gym => (
-                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                        <ListItem key={gym.id} bottomDivider containerStyle={{backgroundColor: "#2F0B29"}}>
-                            <ListItem.Content>
-                                <ListItem.Title>
-                                    <Text style={{color: "white"}}>{gym.name}</Text>                      
-                                </ListItem.Title>
-                                <ListItem.Subtitle>
-                                    <Text style={{color: "white"}}>{gym.address1.trim()}{gym.address2=="" ? "" : ","}{gym.address2}, {gym.town}, {gym.county}</Text>
-                                </ListItem.Subtitle>
-                            </ListItem.Content> 
-                        </ListItem>        
-                    </TouchableOpacity>             
-                ))  
+                    filteredGyms.map(gym => (
+                        <TouchableOpacity onPress={() => joinAlert(gym.name, gym.id)}>
+                            <ListItem key={gym.id} bottomDivider containerStyle={{backgroundColor: "#2F0B29"}}>
+                                <ListItem.Content>
+                                    <ListItem.Title>
+                                        <Text style={{color: "white"}}>{gym.name}</Text>                      
+                                    </ListItem.Title>
+                                    <ListItem.Subtitle>
+                                        <Text style={{color: "white"}}>{gym.address1.trim()}{gym.address2=="" ? "" : ","}{gym.address2}, {gym.town}, {gym.county}</Text>
+                                    </ListItem.Subtitle>
+                                </ListItem.Content> 
+                            </ListItem>        
+                        </TouchableOpacity>             
+                    ))  
+                }
+                </>
             }
+            
+
+            
         </MyView> 
     )
 }
+
 
 
 

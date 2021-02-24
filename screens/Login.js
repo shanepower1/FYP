@@ -3,17 +3,15 @@ import {  Button, Input, Card, Text, Image } from "react-native-elements"
 import {auth} from "../firebase"
 import { StyleSheet} from "react-native"
 import MyView from "../components/MyView"
-import { SafeAreaView } from "react-native"
 
-function Login({navigation}) {
-
+function Login({navigation, currentUser}) {
     // https://reactjs.org/docs/hooks-state.html
     // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
     // "set" function is used to update the state in the future when changed.
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
-    const [email, setEmail] = useState("spower41@gmail.com")
-    const [password, setPassword] = useState("shanepower1")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)//Loading feature when button to sign in is clicked
     
     // https://firebase.google.com/docs/auth/web/password-auth
@@ -22,7 +20,6 @@ function Login({navigation}) {
         auth.signInWithEmailAndPassword(email, password)
             .then(result => {
                 setIsLoading(false)
-                navigation.navigate("Main")
             }).catch(error => {
                 setIsLoading(false)
                 alert(error.message)
@@ -35,7 +32,6 @@ function Login({navigation}) {
     //of the email and password variables.
     return (
         <MyView>
-            <SafeAreaView>
             <Card>    
                 <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
                 <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
@@ -44,7 +40,6 @@ function Login({navigation}) {
                 </Card.Title>
                 <Button title="Login" onPress={signIn} loading={isLoading}/> 
             </Card>
-            </SafeAreaView>
         </MyView>
     )
 }

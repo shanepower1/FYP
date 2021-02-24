@@ -15,7 +15,7 @@ function Event ({route}) {
     // useEffect ensures this code is only ran once when the component is initially loaded. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => {
-        setEvent(route.params.event)
+         setEvent(route.params.event) 
     })
 
     //Returning the below event attributes and displaying them on the Event screen.

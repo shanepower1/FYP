@@ -1,13 +1,14 @@
 import React, { useState } from "react"
 import { auth, db } from "../firebase"
-import { Card, Input, Button } from "react-native-elements"
+import { Card, Input, Button, Text } from "react-native-elements"
+import MyView from "../components/MyView"
 
 // https://reactjs.org/docs/hooks-state.html
 // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
 // "set" function is used to update the state in the future when changed.
 // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.   
 //Assigning all the attributes that will be required when registering a gym to the app.
-function RegisterGym() {
+function RegisterGym({navigation}) {
     const [name, setName] = useState("")
     const [address1, setAddress1] = useState("")
     const [address2, setAddress2] = useState("")
@@ -18,8 +19,6 @@ function RegisterGym() {
     const [password1, setPassword1] = useState("")
     const [password2, setPassword2] = useState("")
 
-    
-    
     // This will ensure both a valid email and number is entered
     // https://emailregex.com/
     //This email regex will ensure a valid email is entered when the user is registering the gym.
@@ -61,13 +60,13 @@ function RegisterGym() {
                         type: "owner"
                     })
 
-                    db.collection("gyms").doc(result.user.uid).set({
+/*                     db.collection("gyms").doc(result.user.uid).set({
                         name: name.trim(),
                         address1: address1.trim(), // Trim removes any whitespace before or after input.
                         address2: address2.trim(),
                         town: town.trim(), 
                         county: county.trim()
-                    })
+                    }) */
                     alert("Success")
                 }).catch(error => {
                     alert(error.message)
@@ -80,19 +79,27 @@ function RegisterGym() {
               //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
               //of the name, email etc.
     return (
-        <Card>
-            <Input onChangeText={text => setName(text)} value={name} placeholder='Name'/> 
-            <Input onChangeText={text => setAddress1(text)} value={address1} placeholder='Address 1'/>
-            <Input onChangeText={text => setAddress2(text)} value={address2} placeholder='Address 2'/>
-            <Input onChangeText={text => setTown(text)} value={town} placeholder='Town'/>
-            <Input onChangeText={text => setCounty(text)} value={county} placeholder='County'/>
-            <Input onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" placeholder='Email Address'/>
-            <Input onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" placeholder='Phone Number'/>
-            <Input onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} placeholder='Password'/>
-            <Input onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} placeholder='Password 2'/>
+        <MyView>
+            <Card>
+                <Input onChangeText={text => setName(text)} value={name} placeholder='Name'/> 
+                <Input onChangeText={text => setAddress1(text)} value={address1} placeholder='Address 1'/>
+                <Input onChangeText={text => setAddress2(text)} value={address2} placeholder='Address 2'/>
+                <Input onChangeText={text => setTown(text)} value={town} placeholder='Town'/>
+                <Input onChangeText={text => setCounty(text)} value={county} placeholder='County'/>
+                <Input onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" placeholder='Email Address'/>
+                <Input onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" placeholder='Phone Number'/>
+                <Input onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} placeholder='Password'/>
+                <Input onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} placeholder='Password 2'/>
 
-            <Button onPress={addGym} title="Add Gym"  />   
-        </Card>  
+                <Button onPress={addGym} title="Register Gym" />   
+            </Card>  
+            <Text 
+                style={{color: "white", textAlign: "center", color: "white", marginTop: 25}} 
+                onPress={() => navigation.navigate("Register")}
+            >
+                Click <Text style={{fontWeight: "bold", color: "white"}}> here </Text> to register user.
+            </Text>
+        </MyView>  
     )
 }
 

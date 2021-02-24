@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import "firebase/auth"
 import "firebase/firestore"
+
 //https://console.firebase.google.com/u/1/project/shanefyp-e17f7/settings/general/web:YzFlMTA1OWMtYmY5ZS00ZjczLTg5YTItZDExMGI5MDZmOTM2
 //The above link is where i got the below code that linked firebase to my project
 const app = firebase.initializeApp({

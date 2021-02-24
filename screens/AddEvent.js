@@ -3,6 +3,7 @@ import { TextInput, View, Button, StyleSheet, Text } from "react-native"
 import { db } from "../firebase"
 import { Card, Input } from "react-native-elements"
 import DateTimePicker from '@react-native-community/datetimepicker'
+import MyView from "../components/MyView"
 
 const styles = StyleSheet.create({
 
@@ -41,22 +42,24 @@ function AddEvent({navigation}) {
     //The "set" function used below allows the text entered into the input in the UI by the user to be set to the 
     //value of the eventName, eventLocation and event info variables.
     return (
-        <Card>
-            <Input style={styles.textInput} onChangeText={text => setEventName(text)} value={eventName}/> 
-            <Input style={styles.textInput} onChangeText={text => setEventLocation(text)} value={eventLocation}/>
-            <Input style={styles.textInput} onChangeText={text => setEventInfo(text)} value={eventInfo}/>
+        <MyView>
+            <Card>
+                <Input style={styles.textInput} onChangeText={text => setEventName(text)} value={eventName}/> 
+                <Input style={styles.textInput} onChangeText={text => setEventLocation(text)} value={eventLocation}/>
+                <Input style={styles.textInput} onChangeText={text => setEventInfo(text)} value={eventInfo}/>
 
-            {/* https://github.com/react-native-datetimepicker/datetimepicker */}
-            {/*Allows the admin to choose a date and time for each event, N.B - this is not compatible with web*/}
-            <DateTimePicker
-                value={eventDate}
-                mode={"datetime"}
-                display="default"
-                onChange={(event, date) => setEventDate(date)}
-            />
+                {/* https://github.com/react-native-datetimepicker/datetimepicker */}
+                {/*Allows the admin to choose a date and time for each event, N.B - this is not compatible with web*/}
+                <DateTimePicker
+                    value={eventDate}
+                    mode={"datetime"}
+                    display="default"
+                    onChange={(event, date) => setEventDate(date)}
+                />
 
-            <Button onPress={addEvent} title="Add Event"  />   
-        </Card>  
+                <Button onPress={addEvent} title="Add Event"  />   
+            </Card>  
+        </MyView>   
     )
 }  
 

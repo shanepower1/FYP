@@ -1,24 +1,30 @@
 import React from "react"
-import {Card,Button, Text} from "react-native-elements"
-import {auth} from "../firebase"
+import { Card, Button, Text, ListItem } from "react-native-elements"
+import { auth } from "../firebase"
 import MyView from "../components/MyView"
+import UpdateGym from "./UpdateGym"
 
 function Account ({navigation}){
-    function signOut (){
-        // Ends the firebase auth session. https://firebase.google.com/docs/auth/web/password-auth
-        auth.signOut()
-        navigation.navigate("Login")    
-    }
-        //Sign out button calling the above SignOut function when pressed.
+    //Sign out button calling the above SignOut function when pressed.
     return (
         <MyView>
-            <Card>
-               <Text> Manage Bookings</Text>           
-            </Card>
+            <Text style={{color: "white", textAlign: "center", fontSize: 30, marginBottom: 10}}>Manage Bookings</Text>           
+            <ListItem onPress={() => auth.signOut()} bottomDivider>
+                <ListItem.Content>
+                    <ListItem.Title>Sign Out</ListItem.Title>
+                    <ListItem.Subtitle>Return to login screen</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron />
+            </ListItem>
 
-            <Card>
-                <Button title="Sign Out" onPress={signOut} />            
-            </Card>
+            {auth.currentUser.type == "owner" ? 
+            <ListItem onPress={() => navigation.navigate("Update Gym")} bottomDivider>
+                <ListItem.Content>
+                    <ListItem.Title>Update Gym Details</ListItem.Title>
+                    <ListItem.Subtitle>Information on gym</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron />
+            </ListItem>: null }
         </MyView>
     )
 }
