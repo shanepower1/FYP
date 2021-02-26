@@ -15,6 +15,7 @@ function GymList({navigation, route}) {
     const [search, setSearch] = useState("")
     const [showEvents, setShowEvents] = useState(false)
     const [selectedGymId, setSelectedGymId] = useState([])
+
     // Runs once when the component is loaded. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => {
@@ -35,7 +36,7 @@ function GymList({navigation, route}) {
     //https://reactnativeelements.com/docs/searchbar/
     useEffect(() => {
         if(search.length < 1) { //If there is nothing entered into the search bar no list of registered gyms will appear.
-            setFilteredGyms([])
+            setFilteredGyms(gyms)
         } else {
             let tempSearch = search.toLowerCase() //tempSearch is what the user will be entering
             let result = gyms.filter(gym =>       //Result will be the gym displayes to the user if it ,atches the below conditions
@@ -61,6 +62,7 @@ function GymList({navigation, route}) {
                     tempList.push(temp)
                 })
                 setGyms(tempList)
+               
             })
     } 
 
@@ -89,7 +91,7 @@ function GymList({navigation, route}) {
           { cancelable: false }
         );
       }
-    
+  
     return (
         <MyView>
             {

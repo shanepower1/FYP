@@ -60,13 +60,13 @@ function RegisterGym({navigation}) {
                         type: "owner"
                     })
 
-/*                     db.collection("gyms").doc(result.user.uid).set({
+                        db.collection("gyms").doc(result.user.uid).set({
                         name: name.trim(),
                         address1: address1.trim(), // Trim removes any whitespace before or after input.
                         address2: address2.trim(),
                         town: town.trim(), 
                         county: county.trim()
-                    }) */
+                    }) 
                     alert("Success")
                 }).catch(error => {
                     alert(error.message)

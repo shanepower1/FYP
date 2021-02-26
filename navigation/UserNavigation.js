@@ -11,6 +11,7 @@ import Events from "../screens/Events"
 import EventList from "../screens/EventList"
 import RegisterGym from "../screens/RegisterGym"
 import GymList from "../screens/GymList"
+import { EventSubscriptionVendor } from "react-native"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -36,11 +37,8 @@ function TabNavigation() {
       <Tab.Screen name="Gym List" component={GymList} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
       }}/> 
-      <Tab.Screen name="Events" component={Events} options={{
-        tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
-      }}/> 
       <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="power-off" size={iconSize} color={iconColor} />
+        tabBarIcon: () => <FontAwesome5 name="sign-out-alt" size={iconSize} color={iconColor} />
       }}/> 
     </Tab.Navigator>
   )
@@ -63,6 +61,7 @@ function UserNavigation() {
             <Stack.Screen name="Register Gym" component={RegisterGym} />
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
+            <Stack.Screen name="Events" component={Events} />
             <Stack.Screen name="Event List" component={EventList} />
         </Stack.Navigator>
     )

@@ -38,10 +38,13 @@ function TabNavigation() {
         tabBarIcon: () => <FontAwesome5 name="home" size={size} color={color} />
       }}/>
       <Tab.Screen name="Add Event" component={AddEvent} options={{
-        tabBarIcon: () => <FontAwesome5 name="power-off" size={size} color={color} />
-      }}/>  
+        tabBarIcon: () => <FontAwesome5 name="plus" size={size} color={color} />
+      }}/> 
+      <Tab.Screen name="Event List" component={EventList} options={{
+        tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={size} color={color} />
+      }}/> 
       <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="power-off" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="sign-out-alt" size={size} color={color} />
       }}/> 
     </Tab.Navigator>
   )
