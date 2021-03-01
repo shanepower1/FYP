@@ -1,24 +1,30 @@
 import React, {useState} from "react"
-import {  Button, Input, Card, Text, Image } from "react-native-elements"
-import {auth} from "../firebase"
-import { StyleSheet} from "react-native"
-import MyView from "../components/MyView"
+import {  Button, Input, Card, Text } from "react-native-elements"
+import { auth } from "../firebase"
+import MyView from "components/MyView"
 
-function Login({navigation, currentUser}) {
+function Login({navigation}) {
     // https://reactjs.org/docs/hooks-state.html
     // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
     // "set" function is used to update the state in the future when changed.
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    // User login for testing
+    const [email, setEmail] = useState("jimmy@gmail.com")
+    const [password, setPassword] = useState("password") 
+
+    // Gym login for testing
+ //   const [email, setEmail] = useState("cashelgym@gmail.com")
+  //  const [password, setPassword] = useState("password")  
+
+
     const [isLoading, setIsLoading] = useState(false)//Loading feature when button to sign in is clicked
     
     // https://firebase.google.com/docs/auth/web/password-auth
     function signIn(){
-        setIsLoading(true)//loading feature will appear
+        setIsLoading(true) //loading feature will appear
         auth.signInWithEmailAndPassword(email, password)
-            .then(result => {
+            .then(() => {
                 setIsLoading(false)
             }).catch(error => {
                 setIsLoading(false)
@@ -33,27 +39,19 @@ function Login({navigation, currentUser}) {
     return (
         <MyView>
             <Card>    
-                <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
-                <Input placeholder="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
-                <Card.Title onPress={() => navigation.navigate("Register")}>
-                    <Text>Create Account</Text>
-                </Card.Title>
+                <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>
+                <Input label="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
                 <Button title="Login" onPress={signIn} loading={isLoading}/> 
             </Card>
+            <Text 
+                style={{color: "white", textAlign: "center", color: "white", marginTop: 25}} 
+                onPress={() => navigation.navigate("Register")}
+            >
+                Click <Text style={{fontWeight: "bold", color: "white"}}>here</Text> to create an account.
+            </Text>
         </MyView>
     )
 }
   
 export default Login
 
-const styles = StyleSheet.create({
-    backgroundImage: {
-        flex: 1,
-        width: 400,
-        height: 400,
-        flexDirection: 'column',
-        backgroundColor:'transparent',
-        justifyContent: 'flex-start',
-    
-    
-    },})

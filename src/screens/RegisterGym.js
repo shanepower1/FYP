@@ -1,7 +1,9 @@
 import React, { useState } from "react"
+import { View } from "react-native"
 import { auth, db } from "../firebase"
 import { Card, Input, Button, Text } from "react-native-elements"
-import MyView from "../components/MyView"
+import MyView from "components/MyView"
+import { addUser, addGym } from "functions/database"
 
 // https://reactjs.org/docs/hooks-state.html
 // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
@@ -9,15 +11,15 @@ import MyView from "../components/MyView"
 // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.   
 //Assigning all the attributes that will be required when registering a gym to the app.
 function RegisterGym({navigation}) {
-    const [name, setName] = useState("")
-    const [address1, setAddress1] = useState("")
-    const [address2, setAddress2] = useState("")
-    const [town, setTown] = useState("")
-    const [county, setCounty] = useState("")
-    const [email, setEmail] = useState("")
-    const [phoneNum, setPhoneNum] = useState("")
-    const [password1, setPassword1] = useState("")
-    const [password2, setPassword2] = useState("")
+    const [name, setName] = useState("Gym Name")
+    const [address1, setAddress1] = useState("address1")
+    const [address2, setAddress2] = useState("address2")
+    const [town, setTown] = useState("town")
+    const [county, setCounty] = useState("county")
+    const [email, setEmail] = useState("gym@gym.com")
+    const [phoneNum, setPhoneNum] = useState("18736873264")
+    const [password1, setPassword1] = useState("password")
+    const [password2, setPassword2] = useState("password")
 
     // This will ensure both a valid email and number is entered
     // https://emailregex.com/
@@ -29,7 +31,7 @@ function RegisterGym({navigation}) {
 
     //Adding some form validation for when a user is registering their gym
     //This will ensure all accurate information is being stored in the database.
-    function addGym() {
+    function handleAddGym() {
         if(name.length < 1) {
             alert("Please enter a name") //Must input a proper name for the gym
         } else if(address1.length < 1) {
@@ -55,18 +57,9 @@ function RegisterGym({navigation}) {
             // https://firebase.google.com/docs/auth/web/password-auth
             // Adding document to "gyms" collection in firebase. If "gyms" collection doesn't exist it will create it. 
             auth.createUserWithEmailAndPassword(email, password1)
-                .then(result => { //result contains newly created user information
-                    db.collection("users").doc(result.user.uid).set({
-                        type: "owner"
-                    })
-
-                        db.collection("gyms").doc(result.user.uid).set({
-                        name: name.trim(),
-                        address1: address1.trim(), // Trim removes any whitespace before or after input.
-                        address2: address2.trim(),
-                        town: town.trim(), 
-                        county: county.trim()
-                    }) 
+                .then(result => { //result contains newly created user information  
+                    addUser(result.user.uid, "owner")
+                    addGym(name, address1, address2, town, county)     
                     alert("Success")
                 }).catch(error => {
                     alert(error.message)
@@ -81,24 +74,27 @@ function RegisterGym({navigation}) {
     return (
         <MyView>
             <Card>
-                <Input onChangeText={text => setName(text)} value={name} placeholder='Name'/> 
-                <Input onChangeText={text => setAddress1(text)} value={address1} placeholder='Address 1'/>
-                <Input onChangeText={text => setAddress2(text)} value={address2} placeholder='Address 2'/>
-                <Input onChangeText={text => setTown(text)} value={town} placeholder='Town'/>
-                <Input onChangeText={text => setCounty(text)} value={county} placeholder='County'/>
-                <Input onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" placeholder='Email Address'/>
-                <Input onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" placeholder='Phone Number'/>
-                <Input onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} placeholder='Password'/>
-                <Input onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} placeholder='Password 2'/>
-
-                <Button onPress={addGym} title="Register Gym" />   
+                <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
+                <Input onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/>
+                <Input onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/>
+                <Input onChangeText={text => setTown(text)} value={town} label='Town'/>
+                <Input onChangeText={text => setCounty(text)} value={county} label='County'/>
+                <Input onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" label='Email Address'/>
+                <Input onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" label='Phone Number'/>
+                <Input onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} label='Password'/>
+                <Input onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} label='Password 2'/>
+                <Card.Title onPress={() => navigation.navigate("Login")}>
+                    <Text>Back To Login</Text>            
+                </Card.Title>
+                <Button onPress={handleAddGym} title="Register Gym" />   
             </Card>  
             <Text 
                 style={{color: "white", textAlign: "center", color: "white", marginTop: 25}} 
-                onPress={() => navigation.navigate("Register")}
+                onPress={() => navigation.navigate("Login")}
             >
-                Click <Text style={{fontWeight: "bold", color: "white"}}> here </Text> to register user.
+                Click <Text style={{fontWeight: "bold", color: "white"}}>here</Text> to register as user.
             </Text>
+            <View style={{height: 25}}/>
         </MyView>  
     )
 }

@@ -1,16 +1,13 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { Button ,Input, Card, Text} from "react-native-elements"
-import {Picker, View} from "react-native"
-import {auth, db} from "../firebase"
-import MyView from "../components/MyView"
-import RegisterGym from "../screens/RegisterGym"
+import { auth, db } from "../firebase"
+import MyView from "components/MyView"
 
 function Register({navigation}) { 
     const [email, setEmail] = useState("")
     const [password1, setPassword1] = useState("")
     const [password2, setPassword2] = useState("")
     const [name, setName] = useState("")
-    const [userType, setUserType] = useState("")
 
     // https://firebase.google.com/docs/auth/web/password-auth
     function RegisterAccount() {
@@ -35,10 +32,10 @@ function Register({navigation}) {
     return (
       <MyView>
         <Card>     
-          <Input placeholder="Name" value={name} onChangeText={text => setName(text)}/>
-          <Input placeholder="Email" value={email} onChangeText = {text => setEmail(text)}/>
-          <Input placeholder="Password1" value={password1} onChangeText={text => setPassword1(text)} secureTextEntry={true}/>
-          <Input placeholder="Password2" value={password2} onChangeText={text => setPassword2(text)} secureTextEntry={true}/>
+          <Input label="Name" value={name} onChangeText={text => setName(text)}/>
+          <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>
+          <Input label="Password 1" value={password1} onChangeText={text => setPassword1(text)} secureTextEntry={true}/>
+          <Input label="Password 2" value={password2} onChangeText={text => setPassword2(text)} secureTextEntry={true}/>
           <Card.Title onPress={() => navigation.navigate("Login")}>
             <Text>Back To Login</Text>            
           </Card.Title>

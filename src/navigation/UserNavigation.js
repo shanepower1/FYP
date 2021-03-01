@@ -4,14 +4,12 @@ import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tab
 import { FontAwesome5 } from '@expo/vector-icons'
 
 // My components.
-import Event from "../screens/Event"
-import Account from "../screens/Account"
-import AddEvent from "../screens/AddEvent"
-import Events from "../screens/Events"
-import EventList from "../screens/EventList"
-import RegisterGym from "../screens/RegisterGym"
-import GymList from "../screens/GymList"
-import { EventSubscriptionVendor } from "react-native"
+import Event from "screens/Event"
+import Account from "screens/Account"
+import AddEvent from "screens/AddEvent"
+import EventList from "screens/EventList"
+import UserHome from "screens/UserHome"
+import Events from "screens/Events"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -22,7 +20,6 @@ function TabNavigation() {
 
   return (
     <Tab.Navigator 
-      initialRouteName="Gym List" 
       shifting={true} 
       tabBarPosition="bottom" 
       tabBarOptions={{
@@ -34,11 +31,12 @@ function TabNavigation() {
           backgroundColor: "orange",
         }
     }}>  
-      <Tab.Screen name="Gym List" component={GymList} options={{
+
+      <Tab.Screen name="Home" component={UserHome} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
       }}/> 
       <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="sign-out-alt" size={iconSize} color={iconColor} />
+        tabBarIcon: () => <FontAwesome5 name="user-alt" size={iconSize} color={iconColor} />
       }}/> 
     </Tab.Navigator>
   )
@@ -47,21 +45,19 @@ function TabNavigation() {
 // Screens for when user is not signed in. 
 function UserNavigation() {
     return (
-        <Stack.Navigator mode="modal" initialRouteName="Main">
-            <Stack.Screen name="Main" 
+        <Stack.Navigator mode="modal" initialRouteName="Tab">
+            <Stack.Screen 
+              name="Tab" 
               options={{
                 headerShown: false, 
                 headerStyle: {
                   backgroundColor:"#2F0B29"
                 }, 
                 headerTintColor: '#fff',
-            }} component={TabNavigation} />
-            
-            <Stack.Screen name="Gym List" options={{headerShown: false}} component={GymList}/>
-            <Stack.Screen name="Register Gym" component={RegisterGym} />
+              }} component={TabNavigation} 
+            />         
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
-            <Stack.Screen name="Events" component={Events} />
             <Stack.Screen name="Event List" component={EventList} />
         </Stack.Navigator>
     )

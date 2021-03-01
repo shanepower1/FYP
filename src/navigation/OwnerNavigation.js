@@ -4,25 +4,24 @@ import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tab
 import { FontAwesome5 } from '@expo/vector-icons'
 
 // My components.
-import Event from "../screens/Event"
-import Account from "../screens/Account"
-import AddEvent from "../screens/AddEvent"
-import Events from "../screens/Events"
-import EventList from "../screens/EventList"
-import RegisterGym from "../screens/RegisterGym"
-import GymList from "../screens/GymList"
-import UpdateGym from '../screens/UpdateGym'
+import Event from "screens/Event"
+import Account from "screens/Account"
+import AddEvent from "screens/AddEvent"
+import Events from "screens/Events"
+import EventList from "screens/EventList"
+import UpdateGym from "screens/UpdateGym"
+import OwnerHome from "screens/OwnerHome"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 function TabNavigation() {
-  const size=24
-  const color="white"
+  const iconSize=24
+  const iconColor="white"
 
   return (
     <Tab.Navigator 
-      initialRouteName="Events" 
+      initialRouteName="Add Event" 
       shifting={true} 
       tabBarPosition="bottom" 
       tabBarOptions={{
@@ -34,17 +33,14 @@ function TabNavigation() {
           backgroundColor: "orange",
         }
     }}>  
-      <Tab.Screen name="Events" component={Events} options={{
-        tabBarIcon: () => <FontAwesome5 name="home" size={size} color={color} />
-      }}/>
-      <Tab.Screen name="Add Event" component={AddEvent} options={{
-        tabBarIcon: () => <FontAwesome5 name="plus" size={size} color={color} />
-      }}/> 
+      <Tab.Screen name="Home" component={OwnerHome} options={{
+        tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
+      }}/>  
       <Tab.Screen name="Event List" component={EventList} options={{
-        tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={size} color={color} />
-      }}/> 
+        tabBarIcon: () => <FontAwesome5 name="list" size={iconSize} color={iconColor} />
+      }}/>  
       <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="sign-out-alt" size={size} color={color} />
+        tabBarIcon: () => <FontAwesome5 name="user-alt" size={iconSize} color={iconColor} />
       }}/> 
     </Tab.Navigator>
   )
@@ -53,9 +49,9 @@ function TabNavigation() {
 // Screens for when user is not signed in. 
 function OwnerNavigation() {
     return ( 
-        <Stack.Navigator mode="modal" initialRouteName="Main">
+        <Stack.Navigator mode="modal" initialRouteName="Tab">
             <Stack.Screen 
-              name="Main" 
+              name="Tab" 
               options={{
                 headerShown: false, 
                 headerStyle: {
@@ -63,8 +59,8 @@ function OwnerNavigation() {
                 }, 
                 headerTintColor: '#fff',
             }} component={TabNavigation} />
+            <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
-            <Stack.Screen name="Event List" component={EventList} />
             <Stack.Screen name="Update Gym" component={UpdateGym} />
         </Stack.Navigator>
     )

@@ -1,9 +1,9 @@
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 
-import Login from "../screens/Login"
-import Register from "../screens/Register"
-import RegisterGym from "../screens/RegisterGym"
+import Login from "screens/Login"
+import Register from "screens/Register"
+import RegisterGym from "screens/RegisterGym"
 
 const Stack = createStackNavigator();
 
