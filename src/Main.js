@@ -1,8 +1,8 @@
   
 import React, { useState, useEffect } from 'react'
-import { LogBox, Text } from 'react-native'
+import { LogBox } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { ThemeProvider } from 'react-native-elements'
+import { ThemeProvider, Text } from 'react-native-elements'
 import { auth } from "./firebase.js"
 import { NavigationContainer } from '@react-navigation/native'
 

@@ -1,5 +1,6 @@
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
+import { Text } from "react-native-elements"
 import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import { FontAwesome5 } from '@expo/vector-icons'
 
@@ -64,6 +65,6 @@ function OwnerNavigation() {
             <Stack.Screen name="Update Gym" component={UpdateGym} />
         </Stack.Navigator>
     )
-}
+} 
 
 export default OwnerNavigation

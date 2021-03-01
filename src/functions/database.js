@@ -1,6 +1,7 @@
 import { db } from "../firebase"
 import { formatDate, formatTime } from "functions/helpers"
 
+// Users.
 export async function getUser(userId) {
     try {
         let doc = await db.collection("users").doc(userId).get()
@@ -61,14 +62,15 @@ export async function getGyms() {
     }  
 }
 
-export async function addGym(name, address1, address2, town, county) {
+export async function addGym(name, address1, address2, town, county, ownerId) {
     try {
         await db.collection("gyms").set({
             name: name,
             address1: address1,
             address2: address2,
             town: town,
-            county: county
+            county: county,
+            ownerId: ownerId
         })
     } catch (error) {
         alert("DB - Add Gym: " + error.message)
@@ -86,8 +88,12 @@ export async function addEvent(name, location, date, info, gymId) {
     })
 }
 
-export async function getEvents() {
-    let docs = await db.collection("events").get()
+export async function getEvents(gymId) {
+    if(gymId != null) {
+        var docs = await db.collection("events").where("gymId", "==", gymId).get()
+    } else {
+        var docs = await db.collection("events").get()
+    }
     
     if(docs.empty) {
         throw new Error("No Events Found!")

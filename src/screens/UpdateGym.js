@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Text, Card } from "react-native-elements"
+import { Text, Card, Button } from "react-native-elements"
 import MyView from "components/MyView"
 import { getGym } from "functions/database"
 import { auth } from "../firebase"
@@ -31,6 +31,7 @@ function UpdateGym() {
                 {address2=="" ? null : <Text>{address2}</Text>}
                 <Text>Town: {town}</Text>
                 <Text>County: {county}</Text>
+                <Button title="Update" />
             </Card>
         </MyView>     
     )

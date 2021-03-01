@@ -18,12 +18,12 @@ function Event ({route}) {
     return (
         <Card>
             <Card.Title>
-                <Text>{event.eventName}</Text>
+                <Text>{event.name}</Text>
             </Card.Title>
-            <Text>{event.formattedDate}</Text>  
-            <Text>{event.formattedTime}</Text>  
-            <Text>{event.eventLocation}</Text> 
-            <Text>{event.eventInfo}</Text>
+            <Text>{event.date}</Text>  
+            <Text>{event.time}</Text>  
+            <Text>{event.location}</Text> 
+            <Text>{event.info}</Text>
             <Card containerStyle={{backgroundColor: "#FAAF40", color: "white", height: 50}}>
             <Text style={{color: "white"}}>Register</Text>       
             </Card> 

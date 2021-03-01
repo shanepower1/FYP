@@ -10,15 +10,18 @@ function Login({navigation}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     // User login for testing
-    const [email, setEmail] = useState("jimmy@gmail.com")
-    const [password, setPassword] = useState("password") 
+/*     const [email, setEmail] = useState("jimmy@gmail.com")
+    const [password, setPassword] = useState("password")  */
 
     // Gym login for testing
- //   const [email, setEmail] = useState("cashelgym@gmail.com")
+ const [email, setEmail] = useState("cashelgym@gmail.com")
+ const [password, setPassword] = useState("password")  
+
+ //   const [email, setEmail] = useState("flyfitness@gmail.com")
   //  const [password, setPassword] = useState("password")  
 
 
-    const [isLoading, setIsLoading] = useState(false)//Loading feature when button to sign in is clicked
+    const [isLoading, setIsLoading] = useState(false) //Loading feature when button to sign in is clicked
     
     // https://firebase.google.com/docs/auth/web/password-auth
     function signIn(){

@@ -3,6 +3,7 @@ import { Card, ListItem, Avatar, Text } from "react-native-elements"
 import { Button } from "react-native"
 import MyView from "components/MyView"
 import { getEvents, deleteEvent } from "functions/database"
+import { auth } from "../firebase"
 
 function EventList({navigation, route}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -20,10 +21,13 @@ function EventList({navigation, route}) {
 
     // https://firebase.google.com/docs/firestore/query-data/get-data.
     function loadEvents(){
-        getEvents().then(events => {
+        let gymId = auth.currentUser.gymId!=null ? auth.currentUser.gymId : auth.currentUser.uid // Checks if user or owner is signed in and gets gymid. 
+
+        getEvents(gymId)
+            .then(events => {
                 setEvents(events)
             }).catch(error => {
-                alert(error.message)
+                //alert(error.message)
             })
     }
     //https://firebase.google.com/docs/firestore/manage-data/delete-data. 

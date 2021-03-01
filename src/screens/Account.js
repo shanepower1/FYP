@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet } from "react-native"
 import { Text, ListItem, Card } from "react-native-elements"
-import { auth } from "../firebase"
+import { auth } from "../firebase.js"
 import MyView from "components/MyView"
 
 function Account ({navigation}){

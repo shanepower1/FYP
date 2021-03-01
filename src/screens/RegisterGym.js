@@ -59,7 +59,7 @@ function RegisterGym({navigation}) {
             auth.createUserWithEmailAndPassword(email, password1)
                 .then(result => { //result contains newly created user information  
                     addUser(result.user.uid, "owner")
-                    addGym(name, address1, address2, town, county)     
+                    addGym(name, address1, address2, town, county, result.user.uid)     
                     alert("Success")
                 }).catch(error => {
                     alert(error.message)

@@ -31,7 +31,6 @@ function TabNavigation() {
           backgroundColor: "orange",
         }
     }}>  
-
       <Tab.Screen name="Home" component={UserHome} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
       }}/> 
