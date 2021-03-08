@@ -15,13 +15,9 @@ export async function getUser(userId) {
 }
 
 export async function addUser(id, userType) {
-    try {
-        await db.collection("users").doc(id).set({
-            type: userType
-        })
-    } catch(error) {
-        alert("DB - Add User: " + error.message)
-    }
+    await db.collection("users").doc(id).set({
+        type: userType
+    })
 } 
 
 export async function joinGym(userId, gymId) {
@@ -63,18 +59,14 @@ export async function getGyms() {
 }
 
 export async function addGym(name, address1, address2, town, county, ownerId) {
-    try {
-        await db.collection("gyms").set({
-            name: name,
-            address1: address1,
-            address2: address2,
-            town: town,
-            county: county,
-            ownerId: ownerId
-        })
-    } catch (error) {
-        alert("DB - Add Gym: " + error.message)
-    }
+    await db.collection("gyms").doc(ownerId).set({
+        name: name,
+        address1: address1,
+        address2: address2,
+        town: town,
+        county: county,
+        ownerId: ownerId
+    }) 
 }
 
 // Events.
@@ -96,7 +88,7 @@ export async function getEvents(gymId) {
     }
     
     if(docs.empty) {
-        throw new Error("No Events Found!")
+        return []
     }
 
     let events = []

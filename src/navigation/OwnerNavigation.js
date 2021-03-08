@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { Text } from "react-native-elements"
 import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'; 
 
 // My components.
 import Event from "screens/Event"
@@ -12,6 +13,7 @@ import Events from "screens/Events"
 import EventList from "screens/EventList"
 import UpdateGym from "screens/UpdateGym"
 import OwnerHome from "screens/OwnerHome"
+import Classes from "screens/Classes"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -36,6 +38,9 @@ function TabNavigation() {
     }}>  
       <Tab.Screen name="Home" component={OwnerHome} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
+      }}/> 
+      <Tab.Screen name="Classes" component={Classes} options={{
+        tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
       }}/>  
       <Tab.Screen name="Event List" component={EventList} options={{
         tabBarIcon: () => <FontAwesome5 name="list" size={iconSize} color={iconColor} />

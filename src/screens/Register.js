@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Button ,Input, Card, Text} from "react-native-elements"
 import { auth, db } from "../firebase"
 import MyView from "components/MyView"
+import { addUser } from "functions/database"
 
 function Register({navigation}) { 
     const [email, setEmail] = useState("")
@@ -13,14 +14,8 @@ function Register({navigation}) {
     function RegisterAccount() {
       auth.createUserWithEmailAndPassword(email, password1)
         .then(result => { // result contains newly created users information. 
-
-            // We get the newly created users id and create a document in the db with the same id. 
-            //This is the information that will be stored in the database on each newly created user.
-            db.collection("users").doc(result.user.uid).set({
-              name: name,
-              type: "standard"
-            })
-          }).catch(error => {
+            addUser(result.user.uid, "standard")
+        }).catch(error => {
             alert(error.message)
         })
     }

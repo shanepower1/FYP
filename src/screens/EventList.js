@@ -28,7 +28,8 @@ function EventList({navigation, route}) {
                 setEvents(events)
             }).catch(error => {
                 //alert(error.message)
-            })
+
+            }) 
     }
     //https://firebase.google.com/docs/firestore/manage-data/delete-data. 
     //Function to delete event from the db using the events ID. 
@@ -44,9 +45,9 @@ function EventList({navigation, route}) {
     
     return (
         <MyView>     
-            <Button title="Add Event" containerStyle={{marginBottom: 10}} onPress={() => navigation.navigate("Add Event")} />
+            {auth.currentUser.type == "owner" && <Button title="Add Event" containerStyle={{marginBottom: 10}} onPress={() => navigation.navigate("Add Event")} />}
             <Button title="Refresh" onPress={loadEvents} />
-             
+
             <Card containerStyle={{padding: 0}}> 
             {
                 // .map loops through the events and displays them one by one. 

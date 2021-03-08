@@ -10,12 +10,12 @@ function Login({navigation}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     // User login for testing
-/*     const [email, setEmail] = useState("jimmy@gmail.com")
-    const [password, setPassword] = useState("password")  */
+/*     const [email, setEmail] = useState("shane@gmail.com")
+    const [password, setPassword] = useState("shanepower")  */
 
     // Gym login for testing
- const [email, setEmail] = useState("cashelgym@gmail.com")
- const [password, setPassword] = useState("password")  
+    const [email, setEmail] = useState("cashelgym@gmail.com")
+    const [password, setPassword] = useState("password")  
 
  //   const [email, setEmail] = useState("flyfitness@gmail.com")
   //  const [password, setPassword] = useState("password")  

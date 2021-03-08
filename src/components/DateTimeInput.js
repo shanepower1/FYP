@@ -15,19 +15,14 @@ export default function DateTimeInput({date, setDate, mode}) {
 
   return (
     <View>
-        <TouchableOpacity onPress={() => setShow(true)}>
-          <Input label="Date" value={formatDate(date)} disabled /> 
-        </TouchableOpacity>
-        {show && (
-            <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-            /> 
-        )}
+        <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+        /> 
     </View>
   )
 }
