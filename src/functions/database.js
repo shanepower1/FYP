@@ -3,15 +3,11 @@ import { formatDate, formatTime } from "functions/helpers"
 
 // Users.
 export async function getUser(userId) {
-    try {
-        let doc = await db.collection("users").doc(userId).get()
-        let user = doc.data()
-        console.log(user)
-        user.id = doc.id
-        return user
-    } catch(error) {
-        alert(`location: database.js\n\nfunction: getUser(userId: ${userId})\n\nMessage: ` + error.message)
-    }
+    let doc = await db.collection("users").doc(userId).get()
+    let user = doc.data()
+    console.log(user)
+    user.id = doc.id
+    return user
 }
 
 export async function addUser(id, userType) {
@@ -21,29 +17,20 @@ export async function addUser(id, userType) {
 } 
 
 export async function joinGym(userId, gymId) {
-    try {
-        await db.collection("users").doc(userId).update({
-            gymId: gymId
-        })
-    } catch(error) {
-        alert("DB - Join Gym: " + error.message)
-    }
+    await db.collection("users").doc(userId).update({
+        gymId: gymId
+    })
 }
 
 // Gyms.
 export async function getGym(id) {
-    try {
-        let doc = await db.collection("gyms").doc(id).get()
-        let gym = doc.data()
-        gym.id = doc.id
-        return gym 
-    } catch(error){
-        alert("DB - Get Gym: " + error.message)
-    }
+    let doc = await db.collection("gyms").doc(id).get()
+    let gym = doc.data()
+    gym.id = doc.id
+    return gym 
 }
 
 export async function getGyms() {
-    try {
         let docs = await db.collection("gyms").get()
         let gymList = []
         docs.forEach(doc => {
@@ -53,9 +40,6 @@ export async function getGyms() {
         })
 
         return gymList
-    } catch(error) {
-        alert("DB - Get Gyms: " + error.message)
-    }  
 }
 
 export async function addGym(name, address1, address2, town, county, ownerId) {
@@ -67,6 +51,16 @@ export async function addGym(name, address1, address2, town, county, ownerId) {
         county: county,
         ownerId: ownerId
     }) 
+}
+
+export async function updateGym(gymId, name, address1, address2, town, county) {
+    await db.collection("gyms").doc(gymId).update({
+        name: name,
+        address1: address1,
+        address2: address2,
+        town: town,
+        county: county
+    })  
 }
 
 // Events.
@@ -87,9 +81,7 @@ export async function getEvents(gymId) {
         var docs = await db.collection("events").get()
     }
     
-    if(docs.empty) {
-        return []
-    }
+    if(docs.empty) return []
 
     let events = []
     docs.forEach(doc => {
@@ -104,10 +96,73 @@ export async function getEvents(gymId) {
 }
 
 export async function deleteEvent(id) {
-    try {
-        await db.collection("events").doc(id).delete()
-    } catch(error) {
-        alert("DB - Delete Event: " + error.message)
-    }  
+    await db.collection("events").doc(id).delete()
 }
 
+// Classes.
+export async function addClass(gymId, name, description) {
+    await db.collection("classes").doc().set({
+        gymId: gymId,
+        name: name,
+        description: description
+    })
+}
+
+export async function getClass(id) {
+    let doc = await db.collection("classes").doc(id).get()
+
+    let classInfo = doc.data()
+    classInfo.id = doc.id
+
+    return classInfo
+}
+
+export async function getClasses(gymId) {
+    let docs = await db.collection("classes").where("gymId", "==", gymId).get()
+
+    if(docs.empty) return []
+
+    let classes = []
+
+    docs.forEach(doc => {
+        let temp = doc.data()
+        temp.id = doc.id
+        classes.push(temp)
+    })
+
+    return classes
+}
+
+export async function deleteClass(classId) {
+    await db.collection("classes").doc(classId).delete()
+}
+
+// Schedule
+export async function addSchedule(gymId, classId, date) {
+    await db.collection("schedule").doc().set({
+        gymId: gymId,
+        classId: classId,
+        date: date
+    })
+}
+
+export async function getSchedule(classId) {
+    let docs = await db.collection("schedule").where("classId", "==", classId).get()
+
+    if(docs.empty) return []
+
+    let schedule = []
+
+    docs.forEach(doc => {
+        let temp = doc.data()
+        temp.id = doc.id
+        temp.date = temp.date.toDate()
+        schedule.push(temp)
+    })
+
+    return schedule
+}
+
+export async function deleteSchedule(id) {
+    await db.collection("schedule").doc(id).delete()
+}

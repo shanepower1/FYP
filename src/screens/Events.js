@@ -16,6 +16,10 @@ function Events() {
     // https://reactnavigation.org/docs/params/
 
     useEffect(() => {
+        getData()
+    }, [])
+
+    function getData() {
         if(auth.currentUser.type == "owner") {
             getGym(auth.currentUser.uid)
                 .then(gym => {
@@ -30,14 +34,14 @@ function Events() {
                     setGymName(gym.name)
                 })
         }   
-    }, [])
+    }
 
     return (
         <MyView>  
-            <Text style={{color: "white", textAlign: "center", fontSize: 25, marginTop: 10}}>{gymName}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Event List", {gymId: gymId, type: "timetable"})}>
+            <Text style={{textAlign: "center", fontSize: 25, marginTop: 10}}>{gymName}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Classes")}>
                 <Card containerStyle={{backgroundColor: "#EE4036", height: height}}>
-                    <Text style={styles.text}>Timetable-Book Your Slot!</Text>
+                    <Text style={styles.text}>View Our Classes</Text>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Event List", {gymId: gymId, type: "classes"})}>

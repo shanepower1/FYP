@@ -10,8 +10,8 @@ function Login({navigation}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     // User login for testing
-/*     const [email, setEmail] = useState("shane@gmail.com")
-    const [password, setPassword] = useState("shanepower")  */
+    // const [email, setEmail] = useState("shane@gmail.com")
+   // const [password, setPassword] = useState("shanepower")  
 
     // Gym login for testing
     const [email, setEmail] = useState("cashelgym@gmail.com")
@@ -40,7 +40,7 @@ function Login({navigation}) {
     //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
     //of the email and password variables.
     return (
-        <MyView>
+        <MyView background="#2F0B29">
             <Card>    
                 <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>
                 <Input label="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>

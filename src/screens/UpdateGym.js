@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Text, Card, Button } from "react-native-elements"
+import { Text, Card, Button, Input } from "react-native-elements"
 import MyView from "components/MyView"
-import { getGym } from "functions/database"
+import { getGym, updateGym } from "functions/database"
 import { auth } from "../firebase"
 
 function UpdateGym() {
@@ -22,16 +22,25 @@ function UpdateGym() {
             setCounty(gym.county)
         })
     }, [])
+
+    function update() {
+        updateGym(id, name, address1, address2, town, county)
+            .then(() => {
+                alert("Success!")
+            }).catch(error => {
+                alert(error.message)
+            })
+    }
+
     return (
         <MyView>
             <Card>
-                <Text>ID: {id}</Text>
-                <Text>Name: {name}</Text>
-                <Text>Address1: {address1}</Text>
-                {address2=="" ? null : <Text>{address2}</Text>}
-                <Text>Town: {town}</Text>
-                <Text>County: {county}</Text>
-                <Button title="Update" />
+                <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
+                <Input onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/> 
+                <Input onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/> 
+                <Input onChangeText={text => setTown(text)} value={town} label='Town'/> 
+                <Input onChangeText={text => setCounty(text)} value={county} label='Address 1'/> 
+                <Button title="Update" onPress={update}/>
             </Card>
         </MyView>     
     )

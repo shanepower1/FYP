@@ -2,6 +2,7 @@ import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'; 
 
 // My components.
 import Event from "screens/Event"
@@ -10,6 +11,8 @@ import AddEvent from "screens/AddEvent"
 import EventList from "screens/EventList"
 import UserHome from "screens/UserHome"
 import Events from "screens/Events"
+import Classes from "screens/Classes"
+import Class from "screens/Class"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -34,6 +37,9 @@ function TabNavigation() {
       <Tab.Screen name="Home" component={UserHome} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
       }}/> 
+      <Tab.Screen name="Classes" component={Classes} options={{
+        tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
+      }}/> 
       <Tab.Screen name="Account" component={Account} options={{
         tabBarIcon: () => <FontAwesome5 name="user-alt" size={iconSize} color={iconColor} />
       }}/> 
@@ -46,9 +52,9 @@ function UserNavigation() {
     return (
         <Stack.Navigator mode="modal" initialRouteName="Tab">
             <Stack.Screen 
-              name="Tab" 
+              name="Gyms are Class" 
               options={{
-                headerShown: false, 
+                headerShown: true, 
                 headerStyle: {
                   backgroundColor:"#2F0B29"
                 }, 
@@ -58,6 +64,7 @@ function UserNavigation() {
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
             <Stack.Screen name="Event List" component={EventList} />
+            <Stack.Screen name="Class" component={Class} />
         </Stack.Navigator>
     )
 }

@@ -3,7 +3,9 @@ import { Card, ListItem, Avatar, Text } from "react-native-elements"
 import { Button } from "react-native"
 import MyView from "components/MyView"
 import { getEvents, deleteEvent } from "functions/database"
-import { auth } from "../firebase"
+import { auth, db } from "../firebase"
+import { FloatingAction } from "react-native-floating-action"
+import { Ionicons } from '@expo/vector-icons';
 
 function EventList({navigation, route}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -43,38 +45,64 @@ function EventList({navigation, route}) {
             })
     }
     
-    return (
-        <MyView>     
-            {auth.currentUser.type == "owner" && <Button title="Add Event" containerStyle={{marginBottom: 10}} onPress={() => navigation.navigate("Add Event")} />}
-            <Button title="Refresh" onPress={loadEvents} />
+    const fabActions = [
+        {
+          text: "Refresh",
+          icon: <Ionicons name="refresh" size={24} color="white" />,
+          name: "refresh",
+          position: 1
+        },
+        {
+          text: "Add Event",
+          icon: <Ionicons name="add-outline" size={24} color="white" />,
+          name: "add",
+          position: 2
+        },
+      ];
 
-            <Card containerStyle={{padding: 0}}> 
-            {
-                // .map loops through the events and displays them one by one. 
-                // https://reactnativeelements.com/docs/listitem/
-                //List Item used o display rows of relevent information
-                events.map(event => (
-                    <ListItem key={event.id} bottomDivider onPress={() => navigation.navigate("Event", {
-                        event: event, // Pass event object to Event.js where we can then display it. 
-                    })}>
-                        <Avatar source={{uri: event.img_url}} />
-                        <ListItem.Content>
-                            <ListItem.Title>
-                                <Text>{event.name}</Text>                      
-                            </ListItem.Title>
-                            <ListItem.Subtitle>
-                                <Text>{event.location}</Text>                      
-                            </ListItem.Subtitle>
-                            <ListItem.Subtitle>
-                               <Text>{event.formattedDate} @ {event.formattedTime}</Text> 
-                            </ListItem.Subtitle>
-                        </ListItem.Content> 
-                        <Button title="X" onPress={() => removeEvent(event.id)}/>
-                    </ListItem>        
-                ))  
-            }
-            </Card> 
-        </MyView>   
+    function handleFab(name) {
+        if(name == "refresh") {
+            loadEvents()
+        } else if(name == "add") {
+            navigation.navigate("Add Event")
+        }
+    }
+
+    return (
+        <>
+            <MyView>     
+                <Card containerStyle={{padding: 0}}> 
+                {
+                    // .map loops through the events and displays them one by one. 
+                    // https://reactnativeelements.com/docs/listitem/
+                    //List Item used o display rows of relevent information
+                    events.map(event => (
+                        <ListItem key={event.id} bottomDivider onPress={() => navigation.navigate("Event", {
+                            event: event, // Pass event object to Event.js where we can then display it. 
+                        })}>
+                            <Avatar source={{uri: event.img_url}} />
+                            <ListItem.Content>
+                                <ListItem.Title>
+                                    <Text>{event.name}</Text>                      
+                                </ListItem.Title>
+                                <ListItem.Subtitle>
+                                    <Text>{event.location}</Text>                      
+                                </ListItem.Subtitle>
+                                <ListItem.Subtitle>
+                                <Text>{event.formattedDate} @ {event.formattedTime}</Text> 
+                                </ListItem.Subtitle>
+                            </ListItem.Content> 
+                            <Button title="X" onPress={() => removeEvent(event.id)}/>
+                        </ListItem>        
+                    ))  
+                }
+                </Card> 
+            </MyView>   
+            <FloatingAction
+                actions={fabActions}
+                onPressItem={handleFab}
+            />
+        </>
     )
 }
 

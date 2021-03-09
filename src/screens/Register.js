@@ -25,7 +25,7 @@ function Register({navigation}) {
     //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
     //of the name, email and password variables.
     return (
-      <MyView>
+      <MyView background="#2F0B29">
         <Card>     
           <Input label="Name" value={name} onChangeText={text => setName(text)}/>
           <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>

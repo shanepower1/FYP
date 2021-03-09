@@ -4,6 +4,7 @@ import { Text } from "react-native-elements"
 import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import { FontAwesome5 } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'; 
+import { auth } from "../firebase"
 
 // My components.
 import Event from "screens/Event"
@@ -14,6 +15,8 @@ import EventList from "screens/EventList"
 import UpdateGym from "screens/UpdateGym"
 import OwnerHome from "screens/OwnerHome"
 import Classes from "screens/Classes"
+import AddClass from "screens/AddClass"
+import Class from "screens/Class"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -57,9 +60,9 @@ function OwnerNavigation() {
     return ( 
         <Stack.Navigator mode="modal" initialRouteName="Tab">
             <Stack.Screen 
-              name="Tab" 
+              name="Gym Name" 
               options={{
-                headerShown: false, 
+                headerShown: true, 
                 headerStyle: {
                   backgroundColor:"#2F0B29"
                 }, 
@@ -68,6 +71,8 @@ function OwnerNavigation() {
             <Stack.Screen name="Add Event" component={AddEvent} />
             <Stack.Screen name="Event" component={Event} />
             <Stack.Screen name="Update Gym" component={UpdateGym} />
+            <Stack.Screen name="Add Class" component={AddClass} />
+            <Stack.Screen name="Class" component={Class} />
         </Stack.Navigator>
     )
 } 

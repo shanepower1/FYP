@@ -72,7 +72,7 @@ function RegisterGym({navigation}) {
               //The "set" function used below allows the text entered into the input in the UI by the user to be set to the value 
               //of the name, email etc.
     return (
-        <MyView>
+        <MyView background="#2F0B29">
             <Card>
                 <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
                 <Input onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/>

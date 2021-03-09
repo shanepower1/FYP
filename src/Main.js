@@ -15,6 +15,10 @@ import NoAuthNavigation from 'navigation/NoAuthNavigation'
 import { getUser } from "functions/database"
 
 const theme = {
+  colors: {
+    primary: "#47113e",
+    secondary: "orange"
+  },
   Button: {
     color: "red",  
  },
@@ -34,6 +38,7 @@ export default function Main() {
           setUserType(user.type)
           auth.currentUser.type = user.type
           auth.currentUser.gymId = user.gymId
+          auth.currentUser.gymName = "This is hardcoded"
         })  
       } else {
         setUserType(null)

@@ -10,7 +10,7 @@ function Account ({navigation}){
     const chevronSize = 30
 
     return (
-        <MyView title="account">
+        <MyView>
             <Card containerStyle={{padding: 0}}>
                 <ListItem onPress={() => auth.signOut()} bottomDivider style={{fontSize: 50}}>
                     <ListItem.Content>
