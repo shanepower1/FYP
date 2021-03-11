@@ -17,4 +17,5 @@ const app = firebase.initializeApp({
 
 //This will prevent me having to type firebase.auth() each time, i can now refer to it as just auth. Same with db
 export const auth = firebase.auth()
+export const storage = firebase.storage()
 export const db = firebase.firestore()

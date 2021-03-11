@@ -48,11 +48,11 @@ function TabNavigation() {
 }
 
 // Screens for when user is not signed in. 
-function UserNavigation() {
+function UserNavigation({gymName}) {
     return (
         <Stack.Navigator mode="modal" initialRouteName="Tab">
             <Stack.Screen 
-              name="Gyms are Class" 
+              name={gymName}
               options={{
                 headerShown: true, 
                 headerStyle: {

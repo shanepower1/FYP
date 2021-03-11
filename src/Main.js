@@ -12,7 +12,7 @@ import OwnerNavigation from "navigation/OwnerNavigation"
 import NoAuthNavigation from 'navigation/NoAuthNavigation' 
 
 // Functions
-import { getUser } from "functions/database"
+import { getUser, getGym } from "functions/database"
 
 const theme = {
   colors: {
@@ -29,6 +29,7 @@ export default function Main() {
   LogBox.ignoreLogs(['Each child in a list', 'Setting a timer'])
 
   const [userType, setUserType] = useState(null)
+  const [gymName, setGymName] = useState("Gym Name")
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(currentUser => {
@@ -38,7 +39,14 @@ export default function Main() {
           setUserType(user.type)
           auth.currentUser.type = user.type
           auth.currentUser.gymId = user.gymId
-          auth.currentUser.gymName = "This is hardcoded"
+
+          getGym(user.type == "owner" ? user.id : user.gymId)
+            .then(gym => {
+              setGymName(gym.name)
+            }).catch(error => {
+              alert(error.message)
+            })
+
         })  
       } else {
         setUserType(null)
@@ -59,7 +67,7 @@ export default function Main() {
             userType == standard -> load <UserNavigation />
             userType == owner -> load <OwnerNavigation />
         */}
-        {userType==null ? <NoAuthNavigation /> : userType=="standard" ? <UserNavigation /> : userType=="owner" ? <OwnerNavigation /> : <Text>User Type Error</Text>}
+        {userType==null ? <NoAuthNavigation /> : userType=="standard" ? <UserNavigation gymName={gymName} /> : userType=="owner" ? <OwnerNavigation gymName={gymName} /> : <Text>User Type Error</Text>}
       </NavigationContainer>  
       <StatusBar style="light" translucent={false}/>
     </ThemeProvider>

@@ -6,6 +6,7 @@ import { getEvents, deleteEvent } from "functions/database"
 import { auth, db } from "../firebase"
 import { FloatingAction } from "react-native-floating-action"
 import { Ionicons } from '@expo/vector-icons';
+import { formatDate, formatTime} from "functions/helpers"
 
 function EventList({navigation, route}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -41,7 +42,7 @@ function EventList({navigation, route}) {
             .then(() => {
                 loadEvents()
             }).catch(error => {
-                console.log(error.message)
+                alert(error.message)
             })
     }
     
@@ -77,10 +78,8 @@ function EventList({navigation, route}) {
                     // https://reactnativeelements.com/docs/listitem/
                     //List Item used o display rows of relevent information
                     events.map(event => (
-                        <ListItem key={event.id} bottomDivider onPress={() => navigation.navigate("Event", {
-                            event: event, // Pass event object to Event.js where we can then display it. 
-                        })}>
-                            <Avatar source={{uri: event.img_url}} />
+                        <ListItem key={event.id} bottomDivider onPress={() => navigation.navigate("Event", {eventId: event.id})}>
+                            <Avatar source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/events%2F${event.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
                             <ListItem.Content>
                                 <ListItem.Title>
                                     <Text>{event.name}</Text>                      
@@ -89,7 +88,7 @@ function EventList({navigation, route}) {
                                     <Text>{event.location}</Text>                      
                                 </ListItem.Subtitle>
                                 <ListItem.Subtitle>
-                                <Text>{event.formattedDate} @ {event.formattedTime}</Text> 
+                                <Text>{formatDate(event.date)} @ {formatTime(event.date)}</Text> 
                                 </ListItem.Subtitle>
                             </ListItem.Content> 
                             <Button title="X" onPress={() => removeEvent(event.id)}/>

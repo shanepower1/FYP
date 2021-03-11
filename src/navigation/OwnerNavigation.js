@@ -17,6 +17,7 @@ import OwnerHome from "screens/OwnerHome"
 import Classes from "screens/Classes"
 import AddClass from "screens/AddClass"
 import Class from "screens/Class"
+import ScheduledClass from "screens/ScheduledClass"
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -56,11 +57,11 @@ function TabNavigation() {
 }
 
 // Screens for when user is not signed in. 
-function OwnerNavigation() {
+function OwnerNavigation({gymName}) {
     return ( 
         <Stack.Navigator mode="modal" initialRouteName="Tab">
             <Stack.Screen 
-              name="Gym Name" 
+              name={gymName}
               options={{
                 headerShown: true, 
                 headerStyle: {
@@ -73,6 +74,7 @@ function OwnerNavigation() {
             <Stack.Screen name="Update Gym" component={UpdateGym} />
             <Stack.Screen name="Add Class" component={AddClass} />
             <Stack.Screen name="Class" component={Class} />
+            <Stack.Screen name="Scheduled Class" component={ScheduledClass} />
         </Stack.Navigator>
     )
 } 

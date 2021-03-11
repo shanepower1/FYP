@@ -15,8 +15,10 @@ function Classes({navigation}) {
     }, [])
 
     function getData() {
-        let gymId = auth.currentUser.gymId!=null ? auth.currentUser.gymId : auth.currentUser.uid // Checks if user or owner is signed in and gets gymid. 
+        // Checks if user or owner is signed in and gets gymid. 
+        let gymId = auth.currentUser.gymId!=null ? auth.currentUser.gymId : auth.currentUser.uid 
 
+        // Calling getClasses from database.js. 
         getClasses(gymId)
             .then(result => {
                 setClasses(result)
@@ -25,6 +27,7 @@ function Classes({navigation}) {
             })
     }
 
+    // Buttons in floating action button. 
     const fabActions = [
         {
           text: "Refresh",
@@ -40,6 +43,7 @@ function Classes({navigation}) {
         },
       ];
 
+    // Handles floating action button click. 
     function handleFab(name) {
         if(name == "refresh") {
             getData()
@@ -54,7 +58,8 @@ function Classes({navigation}) {
                 <Card containerStyle={{padding: 0}}>
                     {classes.map(item => (
                             <ListItem key={item.id} bottomDivider onPress={() => navigation.navigate("Class", {id: item.id})}>
-                                <Avatar source={{uri: item.img_url}} />
+                                {/* Loads image from my firebase storage. class id is the same as the image name. */}
+                                <Avatar source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/classes%2F${item.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
                                 <ListItem.Content>
                                     <ListItem.Title>
                                         <Text>{item.name}</Text>                      
@@ -69,6 +74,7 @@ function Classes({navigation}) {
                     } 
                 </Card>    
             </MyView>
+            {/* https://github.com/santomegonzalo/react-native-floating-action */}
             <FloatingAction
                 actions={fabActions}
                 onPressItem={handleFab}

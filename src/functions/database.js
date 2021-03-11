@@ -1,11 +1,11 @@
 import { db } from "../firebase"
 import { formatDate, formatTime } from "functions/helpers"
+import { uploadImage } from "functions/storage"
 
 // Users.
 export async function getUser(userId) {
     let doc = await db.collection("users").doc(userId).get()
     let user = doc.data()
-    console.log(user)
     user.id = doc.id
     return user
 }
@@ -65,13 +65,25 @@ export async function updateGym(gymId, name, address1, address2, town, county) {
 
 // Events.
 export async function addEvent(name, location, date, info, gymId) {
-    await db.collection("events").doc().set({
+    let ref = await db.collection("events").add({
         name: name,
         location: location,
         date: date,
         info: info,
         gymId: gymId
     })
+
+    return ref
+}
+
+export async function getEvent(eventId) {
+    let doc = await db.collection("events").doc(eventId).get()
+
+    let event = doc.data()
+    event.id = doc.id
+    event.date = event.date.toDate()
+
+    return event
 }
 
 export async function getEvents(gymId) {
@@ -87,8 +99,7 @@ export async function getEvents(gymId) {
     docs.forEach(doc => {
         let event = doc.data()
         event.id = doc.id
-        event.formattedDate = formatDate(event.date.toDate())
-        event.formattedTime = formatTime(event.date.toDate())
+        event.date = doc.data().date.toDate()
         events.push(event)
     }) 
 
@@ -101,11 +112,13 @@ export async function deleteEvent(id) {
 
 // Classes.
 export async function addClass(gymId, name, description) {
-    await db.collection("classes").doc().set({
+    let ref = await db.collection("classes").add({
         gymId: gymId,
         name: name,
         description: description
     })
+
+    return ref
 }
 
 export async function getClass(id) {
@@ -138,16 +151,8 @@ export async function deleteClass(classId) {
 }
 
 // Schedule
-export async function addSchedule(gymId, classId, date) {
-    await db.collection("schedule").doc().set({
-        gymId: gymId,
-        classId: classId,
-        date: date
-    })
-}
-
 export async function getSchedule(classId) {
-    let docs = await db.collection("schedule").where("classId", "==", classId).get()
+    let docs = await db.collection("schedule").where("classId", "==", classId).orderBy("date", "asc").get()
 
     if(docs.empty) return []
 
@@ -161,6 +166,42 @@ export async function getSchedule(classId) {
     })
 
     return schedule
+}
+
+export async function addScheduledClass(gymId, classId, date) {
+    await db.collection("schedule").doc().set({
+        gymId: gymId,
+        classId: classId,
+        date: date,
+        bookings: []
+    })
+}
+
+export async function getScheduledClass(id) {
+    let doc = await db.collection("schedule").doc(id).get()
+
+    let info = doc.data()
+    info.id = doc.id
+    info.date = info.date.toDate()
+
+    return info
+}
+
+// Gets list of bookings from a scheduled class, checks if user has already booked, if not adds their id to bookings arrray.
+export async function bookClass(scheduleId, userId) {
+    let scheduledClass = await getScheduledClass(scheduleId)
+
+    let bookings = scheduledClass.bookings
+
+    if(!bookings.includes(userId)) {
+        bookings.push(userId)
+
+        await db.collection("schedule").doc(scheduleId).update({
+            bookings: bookings
+        })
+    } else {
+        alert("Class already booked")
+    }
 }
 
 export async function deleteSchedule(id) {

@@ -17,7 +17,7 @@ export function formatDate(date) {
 // Takes JS Date object and returns formatted time string. 
 export function formatTime(date) {
     try {
-        return date.getHours() + ":" + date.getMinutes() // Getting individual values from date object for hours and minutes and concatenating them together. 
+        return ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) // Getting individual values from date object for hours and minutes and concatenating them together. 
     } catch(error) {
         alert("Format Time: " + error.message)
     }

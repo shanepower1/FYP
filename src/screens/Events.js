@@ -38,7 +38,6 @@ function Events() {
 
     return (
         <MyView>  
-            <Text style={{textAlign: "center", fontSize: 25, marginTop: 10}}>{gymName}</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Classes")}>
                 <Card containerStyle={{backgroundColor: "#EE4036", height: height}}>
                     <Text style={styles.text}>View Our Classes</Text>

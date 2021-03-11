@@ -5,6 +5,8 @@ import MyView from "components/MyView"
 import { addEvent } from "functions/database";
 import DateTimeInput from "components/DateTimeInput"
 import { auth } from "../firebase"
+import { uploadImage } from "../functions/storage";
+import MyImagePicker from "components/MyImagePicker"
 
 function AddEvent({navigation}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -16,13 +18,15 @@ function AddEvent({navigation}) {
     const [location, setLocation] = useState("")
     const [date, setDate] = useState(new Date())
     const [info, setInfo] = useState("")
+    const [image, setImage] = useState(null);
 
     // https://firebase.google.com/docs/firestore/manage-data/add-data#web
     // Adds a new event document to the Events collection in Firestore. 
     // Adding the below attributes to the event document in the db with the assinged value entered in the UI in the relevant fields.
     function handleAdd() {
         addEvent(name, location, date, info, auth.currentUser.uid)
-            .then(() => {
+            .then(ref => {
+                uploadImage("events", ref.id, image)
                 navigation.navigate("Event List")
             }).catch(error => {
                 alert(error.message)
@@ -39,6 +43,7 @@ function AddEvent({navigation}) {
                 <Input label="Name" onChangeText={text => setName(text)} value={name}/> 
                 <Input label="Location" onChangeText={text => setLocation(text)} value={location}/>
                 <Input label="Info" onChangeText={text => setInfo(text)} value={info}/> 
+                <MyImagePicker image={image} setImage={setImage}/>
                 <DateTimeInput date={date} setDate={setDate} mode="date"/>
                 <Button onPress={handleAdd} title="Add Event"  />   
             </Card>  
