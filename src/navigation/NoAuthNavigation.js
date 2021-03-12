@@ -8,6 +8,7 @@ import RegisterGym from "screens/RegisterGym"
 const Stack = createStackNavigator();
 
 // Screens for when user is not signed in. 
+//These are the screens that will be viible when no user is signed in.
 function NoAuthNavigation() {
     return (
         <Stack.Navigator mode="modal" initialRouteName="Login">

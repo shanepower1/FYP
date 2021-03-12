@@ -39,7 +39,7 @@ function UpdateGym() {
                 <Input onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/> 
                 <Input onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/> 
                 <Input onChangeText={text => setTown(text)} value={town} label='Town'/> 
-                <Input onChangeText={text => setCounty(text)} value={county} label='Address 1'/> 
+                <Input onChangeText={text => setCounty(text)} value={county} label='County'/> 
                 <Button title="Update" onPress={update}/>
             </Card>
         </MyView>     

@@ -20,10 +20,11 @@ function ScheduledClass({route}) {
         route.params.info.bookings.forEach(userId => {
             getUser(userId).then(user => {
                 tempUsers.push(user)
+                alert(userId)
             })
         })  
 
-        await delay(500);
+        await delay(1000);
 
         setBookedUsers(tempUsers)
     }

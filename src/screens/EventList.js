@@ -71,7 +71,8 @@ function EventList({navigation, route}) {
 
     return (
         <>
-            <MyView>     
+            <MyView>  
+                <Card><Text>Check out our upcoming events!</Text></Card>   
                 <Card containerStyle={{padding: 0}}> 
                 {
                     // .map loops through the events and displays them one by one. 

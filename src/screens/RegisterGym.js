@@ -11,15 +11,15 @@ import { addUser, addGym } from "functions/database"
 // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.   
 //Assigning all the attributes that will be required when registering a gym to the app.
 function RegisterGym({navigation}) {
-    const [name, setName] = useState("Gym Name")
-    const [address1, setAddress1] = useState("address1")
-    const [address2, setAddress2] = useState("address2")
-    const [town, setTown] = useState("town")
-    const [county, setCounty] = useState("county")
-    const [email, setEmail] = useState("gym@gym.com")
-    const [phoneNum, setPhoneNum] = useState("18736873264")
-    const [password1, setPassword1] = useState("password")
-    const [password2, setPassword2] = useState("password")
+    const [name, setName] = useState("")
+    const [address1, setAddress1] = useState("")
+    const [address2, setAddress2] = useState("")
+    const [town, setTown] = useState("")
+    const [county, setCounty] = useState("")
+    const [email, setEmail] = useState("")
+    const [phoneNum, setPhoneNum] = useState("")
+    const [password1, setPassword1] = useState("")
+    const [password2, setPassword2] = useState("")
 
     // This will ensure both a valid email and number is entered
     // https://emailregex.com/

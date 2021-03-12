@@ -6,8 +6,16 @@ function OwnerHome() {
     return (
         <MyView>
             <Card>
-                <Text>You are signed in as an owner</Text>
+                <Text>Admin Dashboard</Text>
             </Card>
+            <Card>
+                <Text>Total Number Of Members: </Text>
+            </Card>
+            <Card>
+                <Text>Total Number Of Classes</Text>
+            </Card>
+
+     
         </MyView>
     )
 }

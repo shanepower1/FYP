@@ -29,7 +29,7 @@ function GymList({showEvents}) {
     //https://reactnativeelements.com/docs/searchbar/
     useEffect(() => {
         if(search.length < 1) { //If there is nothing entered into the search bar no list of registered gyms will appear.
-            setFilteredGyms(gyms)
+            setFilteredGyms([])
         } else {
             let tempSearch = search.toLowerCase() //tempSearch is what the user will be entering
             let result = gyms.filter(gym =>       //Result will be the gym displayes to the user if it ,atches the below conditions
@@ -68,7 +68,7 @@ function GymList({showEvents}) {
     return (
         <>
             {
-                <MyView>
+                <MyView background="#2F0B29">
                     <Input onChangeText={text => setSearch(text)} value={search} placeholder='Search' style={{color: "white"}} /> 
                     {
                         // .map loops through the filteredGyms. 

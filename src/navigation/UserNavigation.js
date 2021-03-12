@@ -36,8 +36,11 @@ function TabNavigation() {
     }}>  
       <Tab.Screen name="Home" component={UserHome} options={{
         tabBarIcon: () => <FontAwesome5 name="home" size={iconSize} color={iconColor} />
-      }}/> 
+      }}/>
       <Tab.Screen name="Classes" component={Classes} options={{
+        tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
+      }}/> 
+      <Tab.Screen name="Event List" component={EventList} options={{
         tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
       }}/> 
       <Tab.Screen name="Account" component={Account} options={{

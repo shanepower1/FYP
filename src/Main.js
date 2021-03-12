@@ -26,7 +26,7 @@ const theme = {
 
 export default function Main() {
   // Warning suppression. 
-  LogBox.ignoreLogs(['Each child in a list', 'Setting a timer'])
+  LogBox.ignoreLogs(['Each child in a list', 'Setting a timer', 'Can\'t perform a React state update', 'ReferenceError','Possible Unhandled'])
 
   const [userType, setUserType] = useState(null)
   const [gymName, setGymName] = useState("Gym Name")
@@ -40,13 +40,14 @@ export default function Main() {
           auth.currentUser.type = user.type
           auth.currentUser.gymId = user.gymId
 
-          getGym(user.type == "owner" ? user.id : user.gymId)
-            .then(gym => {
-              setGymName(gym.name)
-            }).catch(error => {
-              alert(error.message)
-            })
-
+          if(user.gymId) {
+            getGym(user.type == "owner" ? user.id : user.gymId)
+              .then(gym => {
+                setGymName(gym.name)
+              }).catch(error => {
+                alert(error.message)
+              })
+          }
         })  
       } else {
         setUserType(null)
@@ -61,12 +62,7 @@ export default function Main() {
     // Navigation added to manage the transition between multiple screens with each screen being placed on top of eachother on the stack.
     <ThemeProvider theme={theme}>
       <NavigationContainer> 
-        {/* 
-            Inline conditional rendering https://reactjs.org/docs/conditional-rendering.html
-            userType == null -> load <NoAuthNavigation />
-            userType == standard -> load <UserNavigation />
-            userType == owner -> load <OwnerNavigation />
-        */}
+     
         {userType==null ? <NoAuthNavigation /> : userType=="standard" ? <UserNavigation gymName={gymName} /> : userType=="owner" ? <OwnerNavigation gymName={gymName} /> : <Text>User Type Error</Text>}
       </NavigationContainer>  
       <StatusBar style="light" translucent={false}/>

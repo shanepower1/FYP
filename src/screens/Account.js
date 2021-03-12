@@ -5,10 +5,11 @@ import { auth } from "../firebase.js"
 import MyView from "components/MyView"
 
 function Account ({navigation}){
-    //Sign out button calling the above SignOut function when pressed.
-    
     const chevronSize = 30
-
+//Below is a card consisting of a sign out button for both users.
+//The button once pressed will call the sign out function
+//Also on another card is update gym detials which is only
+//visible to the gym owner users.
     return (
         <MyView>
             <Card containerStyle={{padding: 0}}>
@@ -19,7 +20,7 @@ function Account ({navigation}){
                     </ListItem.Content>
                     <ListItem.Chevron size={chevronSize}/>
                 </ListItem>
-
+                
                 {auth.currentUser.type == "owner" ? 
                 <ListItem onPress={() => navigation.navigate("Update Gym")} bottomDivider>
                     <ListItem.Content>

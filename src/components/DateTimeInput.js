@@ -6,7 +6,8 @@ import { formatDate } from "functions/helpers"
 
 export default function DateTimeInput({date, setDate, mode}) {
   const [show, setShow] = useState(false);
-    
+   //https://github.com/react-native-datetimepicker/datetimepicker
+   //COde got for the data time picker from the above link. 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');

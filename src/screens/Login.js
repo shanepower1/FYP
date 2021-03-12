@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {  Button, Input, Card, Text } from "react-native-elements"
 import { auth } from "../firebase"
 import MyView from "components/MyView"
+import { ImageBackground } from "react-native"
 
 function Login({navigation}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -10,15 +11,13 @@ function Login({navigation}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     // User login for testing
-    const [email, setEmail] = useState("shane@gmail.com")
-    const [password, setPassword] = useState("shanepower")  
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")  
 
     // Gym login for testing
     //const [email, setEmail] = useState("cashelgym@gmail.com")
     //const [password, setPassword] = useState("password")  
 
- //   const [email, setEmail] = useState("flyfitness@gmail.com")
-  //  const [password, setPassword] = useState("password")  
 
 
     const [isLoading, setIsLoading] = useState(false) //Loading feature when button to sign in is clicked
@@ -41,7 +40,7 @@ function Login({navigation}) {
     //of the email and password variables.
     return (
         <MyView background="#2F0B29">
-            <Card>    
+            <Card>  
                 <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>
                 <Input label="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
                 <Button title="Login" onPress={signIn} loading={isLoading}/> 

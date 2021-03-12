@@ -38,12 +38,12 @@ function Events() {
 
     return (
         <MyView>  
-            <TouchableOpacity onPress={() => navigation.navigate("Classes")}>
+            <TouchableOpacity>
                 <Card containerStyle={{backgroundColor: "#EE4036", height: height}}>
-                    <Text style={styles.text}>View Our Classes</Text>
+                    <Text style={styles.text}>About Us</Text>
                 </Card>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Event List", {gymId: gymId, type: "classes"})}>
+            <TouchableOpacity onPress={() => navigation.navigate("Classes", {gymId: gymId, type: "classes"})}>
                 <Card containerStyle={{backgroundColor: "#262261", height: height}}>     
                     <Text style={styles.text}>View Our Available Classes</Text>
                 </Card>

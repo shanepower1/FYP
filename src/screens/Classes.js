@@ -55,6 +55,7 @@ function Classes({navigation}) {
     return (
         <>
             <MyView>
+              <Card><Text>Weekly Classes</Text></Card>
                 <Card containerStyle={{padding: 0}}>
                     {classes.map(item => (
                             <ListItem key={item.id} bottomDivider onPress={() => navigation.navigate("Class", {id: item.id})}>
@@ -74,7 +75,9 @@ function Classes({navigation}) {
                     } 
                 </Card>    
             </MyView>
+            
             {/* https://github.com/santomegonzalo/react-native-floating-action */}
+            
             <FloatingAction
                 actions={fabActions}
                 onPressItem={handleFab}
