@@ -7,6 +7,7 @@ import { auth, db } from "../firebase"
 import { FloatingAction } from "react-native-floating-action"
 import { Ionicons } from '@expo/vector-icons';
 import { formatDate, formatTime} from "functions/helpers"
+import { useAuth } from "components/AuthContext"
 
 function EventList({navigation, route}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -15,7 +16,7 @@ function EventList({navigation, route}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     const [events, setEvents] = useState([])
-    
+    const { gymId } = useAuth()
     // Runs when component is loaded, and only runs once even if component is updated. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => { 
@@ -24,8 +25,6 @@ function EventList({navigation, route}) {
 
     // https://firebase.google.com/docs/firestore/query-data/get-data.
     function loadEvents(){
-        let gymId = auth.currentUser.gymId!=null ? auth.currentUser.gymId : auth.currentUser.uid // Checks if user or owner is signed in and gets gymid. 
-
         getEvents(gymId)
             .then(events => {
                 setEvents(events)
@@ -72,7 +71,9 @@ function EventList({navigation, route}) {
     return (
         <>
             <MyView>  
-                <Card><Text>Check out our upcoming events!</Text></Card>   
+                <Card>
+                  <Card.Title style={{marginBottom: 0}}>Check out our upcoming events!</Card.Title>
+                </Card>
                 <Card containerStyle={{padding: 0}}> 
                 {
                     // .map loops through the events and displays them one by one. 

@@ -1,8 +1,9 @@
 import React, {useState} from "react"
-import {  Button, Input, Card, Text } from "react-native-elements"
-import { auth } from "../firebase"
+import { Image, View } from "react-native"
+import { Button, Input, Card, Text } from "react-native-elements"
 import MyView from "components/MyView"
-import { ImageBackground } from "react-native"
+/* import { useStore } from "src/Main" */
+import { auth } from "src/firebase"
 
 function Login({navigation}) {
     // https://reactjs.org/docs/hooks-state.html
@@ -11,19 +12,18 @@ function Login({navigation}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     // User login for testing
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")  
+    const [email, setEmail] = useState("jimmyryan@gmail.com")
+    const [password, setPassword] = useState("password123")  
 
     // Gym login for testing
     //const [email, setEmail] = useState("cashelgym@gmail.com")
-    //const [password, setPassword] = useState("password")  
-
-
+   //const [password, setPassword] = useState("password1")  
 
     const [isLoading, setIsLoading] = useState(false) //Loading feature when button to sign in is clicked
-    
+
     // https://firebase.google.com/docs/auth/web/password-auth
     function signIn(){
+
         setIsLoading(true) //loading feature will appear
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
@@ -31,7 +31,9 @@ function Login({navigation}) {
             }).catch(error => {
                 setIsLoading(false)
                 alert(error.message)
-            })
+            })  
+
+            //alert(`Name: ${currentUser.name}\nType: ${currentUser.type}`)
     }
     
     //Code got from react native documentation https://reactnativeelements.com/docs/input
@@ -40,11 +42,19 @@ function Login({navigation}) {
     //of the email and password variables.
     return (
         <MyView background="#2F0B29">
-            <Card>  
-                <Input label="Email" value={email} onChangeText = {text => setEmail(text)}/>
-                <Input label="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
-                <Button title="Login" onPress={signIn} loading={isLoading}/> 
-            </Card>
+            <Image source={require("assets/gymconnect.png")} height={200} style={{marginTop: 25, marginBottom: 25, marginLeft: "auto", marginRight: "auto"}}/>
+            <View style={{backgroundColor: "#2F0B29", marginLeft: 25, marginRight: 25, elevation: 4}} >
+                <Input 
+                    label="Email" 
+                    value={email} 
+                    onChangeText = {text => setEmail(text)}
+                    style={{color: "white"}}
+
+                />
+                <Input style={{color: "white"}} label="Password" value={password} onChangeText={text => setPassword(text)} secureTextEntry={true}/>
+                    <Button title="Login" onPress={signIn} loading={isLoading}
+                /> 
+            </View>
             <Text 
                 style={{color: "white", textAlign: "center", color: "white", marginTop: 25}} 
                 onPress={() => navigation.navigate("Register")}

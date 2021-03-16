@@ -10,9 +10,11 @@ export async function getUser(userId) {
     return user
 }
 
-export async function addUser(id, userType) {
+export async function addUser(id, name, userType, gymId) {
     await db.collection("users").doc(id).set({
-        type: userType
+        name: name,
+        type: userType,
+        gymId: gymId
     })
 } 
 
@@ -42,14 +44,15 @@ export async function getGyms() {
         return gymList
 }
 
-export async function addGym(name, address1, address2, town, county, ownerId) {
+export async function addGym(name, address1, address2, town, county, phoneNum, ownerId) {
     await db.collection("gyms").doc(ownerId).set({
         name: name,
         address1: address1,
         address2: address2,
         town: town,
         county: county,
-        ownerId: ownerId
+        ownerId: ownerId,
+        phoneNum: phoneNum
     }) 
 }
 

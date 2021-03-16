@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from "react"
-import { TouchableOpacity } from "react-native"
-import { Input, ListItem, Text } from "react-native-elements"
-import { auth } from "../firebase"
+import { TouchableOpacity, View, Image } from "react-native"
+import { Input, ListItem, Text, Card } from "react-native-elements"
 import { Alert } from "react-native"
 import MyView from "components/MyView"
-import Events from "screens/Events"
-import { getGyms, getUser, joinGym } from "functions/database"
+import { getGyms, getUser, joinGym, getGym } from "functions/database"
+import { useAuth } from "components/AuthContext"
+import { FontAwesome } from '@expo/vector-icons'; 
+
 
 // https://reactjs.org/docs/hooks-state.html
 // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
@@ -16,13 +17,15 @@ function GymList({showEvents}) {
     const [filteredGyms, setFilteredGyms] = useState([])
     const [search, setSearch] = useState("")
 
+    const { setGymName, userId, setGymId } = useAuth()
+
     // Runs once when the component is loaded. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => {
-        getGyms().then(gyms => {
-            setGyms(gyms)
-            setFilteredGyms(gyms)
-        })
+        getGyms()
+            .then(gyms => {
+                setGyms(gyms)
+            })
     }, [])
 
     // Runs once when component is loaded and every time the search variable changes.
@@ -43,14 +46,18 @@ function GymList({showEvents}) {
         }
     }, [search]) 
 
-    function handleJoinGym(gymId) {
-        joinGym(auth.currentUser.uid, gymId).then(() => {
-            auth.currentUser.gymId = gymId
-            showEvents(true)
-        })
+    function handleJoinGym(gymId, gymName) {
+        joinGym(userId, gymId)
+            .then(() => {
+                setGymId(gymId)
+                setGymName(gymName) 
+                showEvents(true)
+            }).catch(error => {
+                alert(error.message)
+            })
     }
 
-    function joinAlert(gymName, gymId) {
+    function joinAlert(gymId, gymName) {
         Alert.alert(
           gymName,
           'Do you want to join?',
@@ -59,7 +66,7 @@ function GymList({showEvents}) {
               text: 'Cancel',
               style: 'cancel'
             },
-            { text: 'Join', onPress: () => handleJoinGym(gymId) }
+            { text: 'Join', onPress: () => handleJoinGym(gymId, gymName) }
           ],
           { cancelable: false }
         );
@@ -69,27 +76,41 @@ function GymList({showEvents}) {
         <>
             {
                 <MyView background="#2F0B29">
-                    <Input onChangeText={text => setSearch(text)} value={search} placeholder='Search' style={{color: "white"}} /> 
-                    {
-                        // .map loops through the filteredGyms. 
-                        // https://reactnativeelements.com/docs/listitem/
-                        // Below is the infomration displayed on the gyms when searched for in the search bar
-    
-                        filteredGyms.map(gym => (
-                            <TouchableOpacity onPress={() => joinAlert(gym.name, gym.id)}>
-                                <ListItem key={gym.id} bottomDivider containerStyle={{backgroundColor: "#2F0B29"}}>
-                                    <ListItem.Content>
-                                        <ListItem.Title>
-                                            <Text style={{color: "white"}}>{gym.name}</Text>                      
-                                        </ListItem.Title>
-                                        <ListItem.Subtitle>
-                                            <Text style={{color: "white"}}>{gym.address1.trim()}{gym.address2=="" ? "" : ","}{gym.address2}, {gym.town}, {gym.county}</Text>
-                                        </ListItem.Subtitle>
-                                    </ListItem.Content> 
-                                </ListItem>        
-                            </TouchableOpacity>             
-                        ))  
-                    }    
+                    <Image source={require("assets/gymconnect.png")} height={200} style={{marginTop: 25, marginBottom: 25, marginLeft: "auto", marginRight: "auto"}}/>
+                    <Input 
+                        leftIcon={
+                            <View style={{paddingRight: 10}}>
+                                <FontAwesome name="search" size={24} color="white" style={{marginTop: 7}}  />
+                            </View> 
+                        } 
+                        placeholderTextColor="lightgrey" 
+                        onChangeText={text => setSearch(text)} 
+                        value={search} placeholder='First lets search for your gym' 
+                        style={{color: "white", marginTop: 10}}
+                    /> 
+                    <View>
+                        {
+                            // .map loops through the filteredGyms. 
+                            // https://reactnativeelements.com/docs/listitem/
+                            // Below is the infomration displayed on the gyms when searched for in the search bar
+        
+                            filteredGyms.map(item => (
+                                <TouchableOpacity key={item.id} onPress={() => joinAlert(item.id, item.name)}>
+                                    <ListItem bottomDivider containerStyle={{backgroundColor: "#00000000"}}>
+                                        <ListItem.Content>
+                                            <ListItem.Title>
+                                                <Text style={{color: "white"}}>{item.name}</Text>                      
+                                            </ListItem.Title>
+                                            <ListItem.Subtitle>
+                                                <Text style={{color: "white"}}>{item.address1.trim()}{item.address2=="" ? "" : ","}{item.address2}, {item.town}, {item.county}</Text>
+                                            </ListItem.Subtitle>
+                                        </ListItem.Content> 
+                                        <ListItem.Chevron color="white" size={25}/>
+                                    </ListItem>        
+                                </TouchableOpacity>             
+                            ))  
+                        }    
+                    </View>   
                 </MyView>
             }
         </>

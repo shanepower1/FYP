@@ -6,18 +6,17 @@ import { NavigationContainer } from "@react-navigation/native"
 import { FloatingAction } from "react-native-floating-action"
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from "../firebase"
+import { useAuth } from "components/AuthContext"
 
 function Classes({navigation}) {
     const [classes, setClasses] = useState([])
+    const { gymId } = useAuth()
 
     useEffect(() => {
         getData()
     }, [])
 
     function getData() {
-        // Checks if user or owner is signed in and gets gymid. 
-        let gymId = auth.currentUser.gymId!=null ? auth.currentUser.gymId : auth.currentUser.uid 
-
         // Calling getClasses from database.js. 
         getClasses(gymId)
             .then(result => {
@@ -55,8 +54,10 @@ function Classes({navigation}) {
     return (
         <>
             <MyView>
-              <Card><Text>Weekly Classes</Text></Card>
-                <Card containerStyle={{padding: 0}}>
+                <Card>
+                  <Card.Title style={{marginBottom: 0}}>Weekly Classes</Card.Title>
+                </Card>
+                <Card containerStyle={{padding: 0, borderLeftWidth: 10, borderLeftColor: "red"}}>
                     {classes.map(item => (
                             <ListItem key={item.id} bottomDivider onPress={() => navigation.navigate("Class", {id: item.id})}>
                                 {/* Loads image from my firebase storage. class id is the same as the image name. */}

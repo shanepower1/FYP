@@ -16,6 +16,7 @@ export default function DateTimeInput({date, setDate, mode}) {
 
   return (
     <View>
+      {Platform.OS != 'android' &&
         <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -24,6 +25,7 @@ export default function DateTimeInput({date, setDate, mode}) {
             display="default"
             onChange={onChange}
         /> 
+      }
     </View>
   )
 }

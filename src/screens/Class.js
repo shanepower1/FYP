@@ -7,6 +7,7 @@ import { formatDate, formatTime } from "functions/helpers"
 import DateTimeInput from "components/DateTimeInput"
 import { auth } from "../firebase"
 import MyView from "components/MyView"
+import { useAuth } from "components/AuthContext"
 
 function Class({route}) {
     const [name, setName] = useState("")
@@ -15,6 +16,8 @@ function Class({route}) {
     const navigation = useNavigation() // Only screen components receive navigation as a prop. 
     const [scheduleDate, setScheduleDate] = useState(new Date())
 
+    const { userId, userType } = useAuth()
+
     useEffect(() => {  
         loadInfo()
     }, [])
@@ -22,16 +25,17 @@ function Class({route}) {
     function loadInfo() {
         getClass(route.params.id)
             .then(classInfo => {
-                setId(classInfo.id)
                 setName(classInfo.name)
                 setDescription(classInfo.description)
+            }).catch(error => {
+                alert(error.message)
             })
         
         getSchedule(route.params.id)
             .then(result => {
                 result.forEach(scheduledClass => {
                     // Checking if this user has already booked and then adding a boolean field to decide if booking button should be displayed. 
-                    if(scheduledClass.bookings.includes(auth.currentUser.uid)){
+                    if(scheduledClass.bookings.includes(userId)){
                         scheduledClass.alreadyBooked = true
                     } else {
                         scheduledClass.alreadyBooked = false
@@ -53,7 +57,7 @@ function Class({route}) {
     }
 
     function scheduleClass() {
-        addScheduledClass(auth.currentUser.uid, route.params.id, scheduleDate)
+        addScheduledClass(userId, route.params.id, scheduleDate)
             .then(() => {
                 loadInfo()
             }).catch(error => {
@@ -72,7 +76,7 @@ function Class({route}) {
     }
 
     function book(id) {
-        bookClass(id, auth.currentUser.uid)
+        bookClass(id, userId)
             .then(() => loadInfo())
             .catch(error => alert(error.message))
     }
@@ -87,36 +91,38 @@ function Class({route}) {
             <Card>
                 <Card.Title>Class Schedule</Card.Title>
                 <Divider />
-                {schedule.map(item => (
-                    <TouchableNativeFeedback onPress={() => navigation.navigate("Scheduled Class", {info: item})}>
-                        <ListItem key={item.id} bottomDivider>
-                            <ListItem.Content>
-                                <ListItem.Title>
-                                    <Text>{formatDate(item.date)}</Text>                      
-                                </ListItem.Title>
-                                <ListItem.Subtitle>
-                                    <Text>{formatTime(item.date)}</Text>                      
-                                </ListItem.Subtitle>
-                                <ListItem.Subtitle>
-                                </ListItem.Subtitle>
-                            </ListItem.Content> 
-                            {
-                                auth.currentUser.type == "owner"
-                                ?
-                                <Button title="X" onPress={() => removeSchedule(item.id)}/>
-                                :
-                                item.alreadyBooked ? 
-                                <Text>booked</Text> 
-                                :
-                                <Button title="Book" onPress={() => book(item.id)}/>
-                            }
-                        </ListItem>        
-                    </TouchableNativeFeedback>        
+                {
+                    schedule.map(item => (
+                        <TouchableNativeFeedback key={item.id} onPress={() => navigation.navigate("Scheduled Class", {info: item})}>
+                            <ListItem bottomDivider>
+                                <ListItem.Content>
+                                    <ListItem.Title>
+                                        <Text>{formatDate(item.date)}</Text>                      
+                                    </ListItem.Title>
+                                    <ListItem.Subtitle>
+                                        <Text>{formatTime(item.date)}</Text>                      
+                                    </ListItem.Subtitle>
+                                    <ListItem.Subtitle>
+                                    </ListItem.Subtitle>
+                                </ListItem.Content> 
+                                {
+                                    userType == "owner"
+                                    ?
+                                    <Button title="X" onPress={() => removeSchedule(item.id)}/>
+                                    :
+                                    item.alreadyBooked ? 
+                                    <Text>booked</Text> 
+                                    :
+                                    <Button title="Book" onPress={() => book(item.id)}/>
+                                }
+                            </ListItem>        
+                        </TouchableNativeFeedback>        
                     )) 
                 }
+                
             </Card>
             { 
-                auth.currentUser.type == "owner" &&
+                userType == "owner" &&
                 <>
                     <Card>
                         <DateTimeInput date={scheduleDate} setDate={setScheduleDate} mode="datetime"/>

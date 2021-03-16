@@ -3,8 +3,11 @@ import { StyleSheet } from "react-native"
 import { Text, ListItem, Card } from "react-native-elements"
 import { auth } from "../firebase.js"
 import MyView from "components/MyView"
+import { useAuth } from "components/AuthContext"
 
 function Account ({navigation}){
+    const { isSignedIn, userType, gymName } = useAuth()
+
     const chevronSize = 30
 //Below is a card consisting of a sign out button for both users.
 //The button once pressed will call the sign out function
@@ -21,7 +24,7 @@ function Account ({navigation}){
                     <ListItem.Chevron size={chevronSize}/>
                 </ListItem>
                 
-                {auth.currentUser.type == "owner" ? 
+                {userType == "owner" ? 
                 <ListItem onPress={() => navigation.navigate("Update Gym")} bottomDivider>
                     <ListItem.Content>
                         <ListItem.Title style={styles.title}>Update Gym Details</ListItem.Title>
@@ -29,7 +32,7 @@ function Account ({navigation}){
                     </ListItem.Content>
                     <ListItem.Chevron size={chevronSize}/>
                 </ListItem>: null }
-            </Card>              
+            </Card>             
         </MyView>
     )
 }

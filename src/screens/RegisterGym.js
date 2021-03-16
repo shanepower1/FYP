@@ -58,8 +58,8 @@ function RegisterGym({navigation}) {
             // Adding document to "gyms" collection in firebase. If "gyms" collection doesn't exist it will create it. 
             auth.createUserWithEmailAndPassword(email, password1)
                 .then(result => { //result contains newly created user information  
-                    addUser(result.user.uid, "owner")
-                    addGym(name, address1, address2, town, county, result.user.uid)     
+                    addUser(result.user.uid, "", "owner", result.user.uid)
+                    addGym(name, address1, address2, town, county, phoneNum, result.user.uid)     
                     alert("Success")
                 }).catch(error => {
                     alert(error.message)
@@ -73,21 +73,21 @@ function RegisterGym({navigation}) {
               //of the name, email etc.
     return (
         <MyView background="#2F0B29">
-            <Card>
-                <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
-                <Input onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/>
-                <Input onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/>
-                <Input onChangeText={text => setTown(text)} value={town} label='Town'/>
-                <Input onChangeText={text => setCounty(text)} value={county} label='County'/>
-                <Input onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" label='Email Address'/>
-                <Input onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" label='Phone Number'/>
-                <Input onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} label='Password'/>
-                <Input onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} label='Password 2'/>
+            <View style={{backgroundColor: "#2F0B29", marginLeft: 25, marginRight: 25, marginTop: 10, elevation: 4}} >
+                <Input style={{color: "white"}} onChangeText={text => setName(text)} value={name} label='Name'/> 
+                <Input style={{color: "white"}} onChangeText={text => setAddress1(text)} value={address1} label='Address 1'/>
+                <Input style={{color: "white"}} onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/>
+                <Input style={{color: "white"}} onChangeText={text => setTown(text)} value={town} label='Town'/>
+                <Input style={{color: "white"}} onChangeText={text => setCounty(text)} value={county} label='County'/>
+                <Input style={{color: "white"}} onChangeText={text => setEmail(text)} value={email} keyboardType="email-address" label='Email Address'/>
+                <Input style={{color: "white"}} onChangeText={text => setPhoneNum(text)} value={phoneNum} keyboardType="numeric" label='Phone Number'/>
+                <Input style={{color: "white"}} onChangeText={text => setPassword1(text)} value={password1} secureTextEntry={true} label='Password'/>
+                <Input style={{color: "white"}} onChangeText={text => setPassword2(text)} value={password2} secureTextEntry={true} label='Password 2'/>
                 <Card.Title onPress={() => navigation.navigate("Login")}>
-                    <Text>Back To Login</Text>            
+                    <Text style={{color: "white"}}>Back To Login</Text>            
                 </Card.Title>
                 <Button onPress={handleAddGym} title="Register Gym" />   
-            </Card>  
+            </View>  
             <Text 
                 style={{color: "white", textAlign: "center", color: "white", marginTop: 25}} 
                 onPress={() => navigation.navigate("Login")}
