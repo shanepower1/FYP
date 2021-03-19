@@ -11,6 +11,7 @@ function UpdateGym() {
     const [address2, setAddress2] = useState("")
     const [town, setTown] = useState("")
     const [county, setCounty] = useState("")
+    const [openingHours, setOpeningHours] = useState("")
 
     useEffect(() => {
         getGym(auth.currentUser.uid).then(gym => {
@@ -20,11 +21,12 @@ function UpdateGym() {
             setAddress2(gym.address2)
             setTown(gym.town)
             setCounty(gym.county)
+            setOpeningHours(gym.openingHours)
         })
     }, [])
 
     function update() {
-        updateGym(id, name, address1, address2, town, county)
+        updateGym(id, name, address1, address2, town, county, openingHours)
             .then(() => {
                 alert("Success!")
             }).catch(error => {
@@ -40,6 +42,7 @@ function UpdateGym() {
                 <Input onChangeText={text => setAddress2(text)} value={address2} label='Address 2'/> 
                 <Input onChangeText={text => setTown(text)} value={town} label='Town'/> 
                 <Input onChangeText={text => setCounty(text)} value={county} label='County'/> 
+                <Input onChangeText={text => setOpeningHours(text)} value={openingHours} label='Opening Hours' multiline={true}/> 
                 <Button title="Update" onPress={update}/>
             </Card>
         </MyView>     

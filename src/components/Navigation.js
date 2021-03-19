@@ -1,12 +1,12 @@
 import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
-import { createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { FontAwesome5 } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { useAuth } from "components/AuthContext"
-
 
 // Screen Components.
 import Login from "screens/Login"
@@ -30,7 +30,7 @@ const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
 
 function TabNavigation() {
-  const { userType } = useAuth()
+  const { userType, gymId } = useAuth()
 
   const iconSize=24
   const iconColor="white"
@@ -69,7 +69,7 @@ function TabNavigation() {
         tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
       }}/> 
       <Tab.Screen name="Event List" component={EventList} options={{
-        tabBarIcon: () => <FontAwesome name="group" size={iconSize} color={iconColor} />
+        tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={iconSize} color={iconColor} />
       }}/> 
       <Tab.Screen name="Account" component={Account} options={{
         tabBarIcon: () => <FontAwesome5 name="user-alt" size={iconSize} color={iconColor} />

@@ -26,6 +26,7 @@ export default function AuthProvider({ children }) {
                 setUserName("")
                 setUserType("")
                 setUserId(null)
+                setGymId(null)
                 setGymName("Pick a Gym")
             }
         })

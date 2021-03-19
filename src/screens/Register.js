@@ -34,7 +34,7 @@ function Register({navigation}) {
           <Input style={{color: "white"}} label="Password 1" value={password1} onChangeText={text => setPassword1(text)} secureTextEntry={true}/>
           <Input style={{color: "white"}} label="Password 2" value={password2} onChangeText={text => setPassword2(text)} secureTextEntry={true}/>
           <Card.Title onPress={() => navigation.navigate("Login")}>
-            <Text>Back To Login</Text>            
+            <Text style={{color:"white"}}>Back To Login</Text>            
           </Card.Title>
           <Button title="Register" onPress={RegisterAccount}/> 
         </View>
@@ -42,5 +42,7 @@ function Register({navigation}) {
       </MyView>
     )
 }
+
+
   
 export default Register

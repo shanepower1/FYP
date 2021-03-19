@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Text, Card } from "react-native-elements"
 import MyView from "components/MyView"
+import { useAuth } from "components/AuthContext"
 
 function OwnerHome() {
     return (
@@ -14,8 +15,6 @@ function OwnerHome() {
             <Card>
                 <Text>Total Number Of Classes</Text>
             </Card>
-
-     
         </MyView>
     )
 }

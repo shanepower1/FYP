@@ -33,19 +33,23 @@ function UserHome() {
         <MyView>  
             <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
                 <Card containerStyle={{padding: 0}} >
-                    <Card.Image source={require("assets/gymconnect.png")}>
+                    <Card.Image source={require("assets/aboutus.png")}>
                         <Text style={styles.text}>About Us</Text>
                     </Card.Image>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Classes", {gymId: gymId, type: "classes"})}>
-                <Card containerStyle={{backgroundColor: "#262261", height: height}}>     
+                <Card containerStyle={{padding:0}}>
+                <Card.Image source={require("assets/Capture.png")}>    
                     <Text style={styles.text}>View Our Available Classes</Text>
+                    </Card.Image>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Event List", {gymId: gymId, type: "upcoming" })}>
-                <Card containerStyle={{backgroundColor: "#FAAF40", height: height}}>
-                    <Text style={styles.text}>See Some Of Our Upcoming Events</Text>
+                <Card containerStyle={{padding:0}}>
+                <Card.Image source={require("assets/event.png")}>
+                    <Text style={styles.text}>Upcoming Events</Text>
+                </Card.Image>
                 </Card>
             </TouchableOpacity> 
         </MyView>
@@ -56,6 +60,12 @@ const styles = StyleSheet.create({
     text: {
         color: "white",
         textAlign: "center",
+        marginTop: "auto",
+        marginBottom: "auto",
+        fontSize: 22,
+        textShadowColor: "black",
+        textShadowRadius: 5,
+        fontWeight: "bold"
     }
 });
 

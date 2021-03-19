@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./src/assets/gymconnect.png",
       "resizeMode": "contain",
       "backgroundColor": "#2F0B29"
     },

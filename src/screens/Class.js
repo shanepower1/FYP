@@ -13,6 +13,7 @@ function Class({route}) {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [schedule, setSchedule] = useState([])
+    const [category, setCategory] = useState("")
     const navigation = useNavigation() // Only screen components receive navigation as a prop. 
     const [scheduleDate, setScheduleDate] = useState(new Date())
 
@@ -27,6 +28,7 @@ function Class({route}) {
             .then(classInfo => {
                 setName(classInfo.name)
                 setDescription(classInfo.description)
+                setCategory(classInfo.category)
             }).catch(error => {
                 alert(error.message)
             })
@@ -87,6 +89,7 @@ function Class({route}) {
                 <Card.Title>{name}</Card.Title>
                 <Card.Image source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/classes%2F${route.params.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
                 <Text>{description}</Text>
+                <Text>{category}</Text>
             </Card>
             <Card>
                 <Card.Title>Class Schedule</Card.Title>

@@ -56,13 +56,14 @@ export async function addGym(name, address1, address2, town, county, phoneNum, o
     }) 
 }
 
-export async function updateGym(gymId, name, address1, address2, town, county) {
+export async function updateGym(gymId, name, address1, address2, town, county, openingHours) {
     await db.collection("gyms").doc(gymId).update({
         name: name,
         address1: address1,
         address2: address2,
         town: town,
-        county: county
+        county: county,
+        openingHours: openingHours
     })  
 }
 
@@ -114,11 +115,12 @@ export async function deleteEvent(id) {
 }
 
 // Classes.
-export async function addClass(gymId, name, description) {
+export async function addClass(gymId, name, description, category) {
     let ref = await db.collection("classes").add({
         gymId: gymId,
         name: name,
-        description: description
+        description: description,
+        category: category
     })
 
     return ref

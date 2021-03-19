@@ -12,7 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page. 
 // "set" function is used to update the state in the future when changed.
 // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.  
-function GymList({showEvents}) {
+function GymList() {
     const [gyms, setGyms] = useState([])
     const [filteredGyms, setFilteredGyms] = useState([])
     const [search, setSearch] = useState("")
@@ -51,7 +51,6 @@ function GymList({showEvents}) {
             .then(() => {
                 setGymId(gymId)
                 setGymName(gymName) 
-                showEvents(true)
             }).catch(error => {
                 alert(error.message)
             })

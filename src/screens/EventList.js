@@ -16,7 +16,7 @@ function EventList({navigation, route}) {
     // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
      
     const [events, setEvents] = useState([])
-    const { gymId } = useAuth()
+    const { gymId, userType } = useAuth()
     // Runs when component is loaded, and only runs once even if component is updated. 
     //https://reactjs.org/docs/hooks-effect.html
     useEffect(() => { 
@@ -99,10 +99,15 @@ function EventList({navigation, route}) {
                 }
                 </Card> 
             </MyView>   
-            <FloatingAction
+
+            {
+                userType=="owner" &&
+                <FloatingAction
                 actions={fabActions}
                 onPressItem={handleFab}
             />
+            }
+
         </>
     )
 }

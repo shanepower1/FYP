@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { Text, Card, Button, Input, ListItem, Avatar} from "react-native-elements"
+import { View, Button } from "react-native"
+import { Text, Card, Input, ListItem, Avatar} from "react-native-elements"
 import MyView from "components/MyView"
 import { getClasses } from "functions/database"
 import { NavigationContainer } from "@react-navigation/native"
@@ -10,7 +11,8 @@ import { useAuth } from "components/AuthContext"
 
 function Classes({navigation}) {
     const [classes, setClasses] = useState([])
-    const { gymId } = useAuth()
+    const [filteredClasses, setFilteredClasses] = useState([])
+    const { gymId, userType } = useAuth()
 
     useEffect(() => {
         getData()
@@ -21,6 +23,7 @@ function Classes({navigation}) {
         getClasses(gymId)
             .then(result => {
                 setClasses(result)
+                setFilteredClasses(result)
             }).catch(error => {
                 alert(error.message)
             })
@@ -51,14 +54,33 @@ function Classes({navigation}) {
         }
     }
 
+    function getCategoryColor(category) {
+        if(category == "Strength") {
+            return "red"
+        } else if(category == "Endurance") {
+            return "blue"
+        } else if(category == "Balance") {
+            return "green"
+        }
+    }
+
+    function filterClasses(category) {
+        let temp = classes.filter(item => item.category == category)
+        setFilteredClasses(temp)
+    }
+
     return (
         <>
             <MyView>
                 <Card>
-                  <Card.Title style={{marginBottom: 0}}>Weekly Classes</Card.Title>
+                  <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+                    <Button title="Strength" color="red" style={{flex: 1}} onPress={() => filterClasses("Strength")}/>
+                    <Button title="Endurance" color="blue" style={{flex: 1}}  onPress={() => filterClasses("Endurance")}/>
+                    <Button title="Balance" color="green" style={{flex: 1}}  onPress={() => filterClasses("Balance")}/>
+                  </View>
                 </Card>
-                <Card containerStyle={{padding: 0, borderLeftWidth: 10, borderLeftColor: "red"}}>
-                    {classes.map(item => (
+                    {filteredClasses.map(item => (
+                        <Card containerStyle={{padding: 0, borderLeftWidth: 10, borderLeftColor: getCategoryColor(item.category)}}>
                             <ListItem key={item.id} bottomDivider onPress={() => navigation.navigate("Class", {id: item.id})}>
                                 {/* Loads image from my firebase storage. class id is the same as the image name. */}
                                 <Avatar source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/classes%2F${item.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
@@ -71,18 +93,23 @@ function Classes({navigation}) {
                                     </ListItem.Subtitle>
                                 </ListItem.Content> 
                                 <ListItem.Chevron size={25}/>
-                            </ListItem>        
+                            </ListItem>      
+                            </Card>  
                         ))
                     } 
-                </Card>    
+    
             </MyView>
             
             {/* https://github.com/santomegonzalo/react-native-floating-action */}
             
-            <FloatingAction
-                actions={fabActions}
-                onPressItem={handleFab}
-            />
+            {
+                userType == "owner" &&
+                <FloatingAction
+                    actions={fabActions}
+                    onPressItem={handleFab}
+                />
+            }
+
         </>
     )
 }
