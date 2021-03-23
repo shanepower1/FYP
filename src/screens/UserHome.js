@@ -26,32 +26,38 @@ function UserHome() {
                 setGymId(gym.id)
                 setGymName(gym.name)
             })
-
     }
 
     return (
         <MyView>  
             <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
-                <Card containerStyle={{padding: 0}} >
+                <Card containerStyle={{padding: 10}} >
                     <Card.Image source={require("assets/aboutus.png")}>
                         <Text style={styles.text}>About Us</Text>
                     </Card.Image>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Classes", {gymId: gymId, type: "classes"})}>
-                <Card containerStyle={{padding:0}}>
+                <Card containerStyle={{padding:10}}>
                 <Card.Image source={require("assets/Capture.png")}>    
                     <Text style={styles.text}>View Our Available Classes</Text>
                     </Card.Image>
                 </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Event List", {gymId: gymId, type: "upcoming" })}>
-                <Card containerStyle={{padding:0}}>
+                <Card containerStyle={{padding:10}}>
                 <Card.Image source={require("assets/event.png")}>
                     <Text style={styles.text}>Upcoming Events</Text>
                 </Card.Image>
                 </Card>
-            </TouchableOpacity> 
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Account")}>
+                <Card containerStyle={{padding: 10}} >
+                    <Card.Image source={require("assets/weights.png")}>
+                        <Text style={styles.text}>My Account</Text>
+                    </Card.Image>
+                </Card>
+            </TouchableOpacity>
         </MyView>
     )
 }

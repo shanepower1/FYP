@@ -88,9 +88,11 @@ function Class({route}) {
             <Card>
                 <Card.Title>{name}</Card.Title>
                 <Card.Image source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/classes%2F${route.params.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
-                <Text>{description}</Text>
-                <Text>{category}</Text>
             </Card>
+            <Card>
+                <Card.Title style={{marginBottom:0}}> Description</Card.Title>
+                <Text>{description}</Text>
+                </Card>
             <Card>
                 <Card.Title>Class Schedule</Card.Title>
                 <Divider />

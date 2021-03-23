@@ -1,4 +1,4 @@
-import { db } from "../firebase"
+import { db, auth } from "../firebase"
 import { formatDate, formatTime } from "functions/helpers"
 import { uploadImage } from "functions/storage"
 
@@ -14,7 +14,8 @@ export async function addUser(id, name, userType, gymId) {
     await db.collection("users").doc(id).set({
         name: name,
         type: userType,
-        gymId: gymId
+        gymId: gymId,
+        schedule: []
     })
 } 
 
@@ -85,7 +86,7 @@ export async function getEvent(eventId) {
 
     let event = doc.data()
     event.id = doc.id
-    event.date = event.date.toDate()
+    event.date = doc.data().date.toDate()
 
     return event
 }
@@ -203,6 +204,15 @@ export async function bookClass(scheduleId, userId) {
 
         await db.collection("schedule").doc(scheduleId).update({
             bookings: bookings
+        })
+
+        let user = await getUser(auth.currentUser.uid)
+        let schedule = user.schedule
+
+        schedule.push(scheduleId)
+
+        await db.collection("users").doc(auth.currentUser.uid).update({
+            schedule: schedule
         })
     } else {
         alert("Class already booked")

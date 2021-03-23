@@ -44,19 +44,21 @@ function EventList({navigation, route}) {
                 alert(error.message)
             })
     }
-    
+    //https://www.npmjs.com/package/react-native-floating-action
     const fabActions = [
         {
-          text: "Refresh",
-          icon: <Ionicons name="refresh" size={24} color="white" />,
-          name: "refresh",
-          position: 1
+            text: "Refresh",
+            icon: <Ionicons name="refresh" size={24} color="white" />,
+            name: "refresh",
+            position: 1,
+            color: "#2F0B29"
         },
         {
-          text: "Add Event",
-          icon: <Ionicons name="add-outline" size={24} color="white" />,
-          name: "add",
-          position: 2
+            text: "Add Event",
+            icon: <Ionicons name="add-outline" size={24} color="white" />,
+            name: "add",
+            position: 2,
+            color: "#2F0B29",
         },
       ];
 
@@ -93,19 +95,21 @@ function EventList({navigation, route}) {
                                 <Text>{formatDate(event.date)} @ {formatTime(event.date)}</Text> 
                                 </ListItem.Subtitle>
                             </ListItem.Content> 
-                            <Button title="X" onPress={() => removeEvent(event.id)}/>
+                            {userType=="owner" && <Button title="X" onPress={() => removeEvent(event.id)}/>}
                         </ListItem>        
                     ))  
                 }
                 </Card> 
             </MyView>   
-
+        
             {
+                //https://www.npmjs.com/package/react-native-floating-action
                 userType=="owner" &&
                 <FloatingAction
-                actions={fabActions}
-                onPressItem={handleFab}
-            />
+                    actions={fabActions}
+                    onPressItem={handleFab}
+                    color="#2F0B29"
+                />
             }
 
         </>

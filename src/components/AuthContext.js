@@ -36,6 +36,8 @@ export default function AuthProvider({ children }) {
 
     async function loadData(userId) {
         try {
+            await delay(1000)
+
             var userInfo = await getUser(userId)
             
             if(userInfo.gymId != null){
@@ -54,6 +56,8 @@ export default function AuthProvider({ children }) {
         }
     }
   
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
     const value = {
         isSignedIn,
         userName,

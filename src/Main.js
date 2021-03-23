@@ -18,7 +18,8 @@ const theme = {
 }
 
 export default function Main() {
-  LogBox.ignoreLogs(['Setting a timer'])  // Warning suppression. 
+  //https://stackoverflow.com/questions/35309385/how-do-you-hide-the-warnings-in-react-native-ios-simulator
+  LogBox.ignoreLogs(['Setting a timer', 'Non-serializable values'])  // Warning suppression. 
 
   return (
     //https://reactnavigation.org/docs/stack-navigator/

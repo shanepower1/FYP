@@ -30,22 +30,26 @@ function Classes({navigation}) {
     }
 
     // Buttons in floating action button. 
+    //https://www.npmjs.com/package/react-native-floating-action
     const fabActions = [
         {
           text: "Refresh",
           icon: <Ionicons name="refresh" size={24} color="white" />,
           name: "refresh",
-          position: 1
+          position: 1,
+          color: "#2F0B29",
         },
         {
           text: "Add Class",
           icon: <Ionicons name="add-outline" size={24} color="white" />,
           name: "add",
-          position: 2
+          position: 2,
+          color: "#2F0B29",
         },
       ];
 
     // Handles floating action button click. 
+    //https://www.npmjs.com/package/react-native-floating-action
     function handleFab(name) {
         if(name == "refresh") {
             getData()
@@ -56,11 +60,11 @@ function Classes({navigation}) {
 
     function getCategoryColor(category) {
         if(category == "Strength") {
-            return "red"
+            return "#d12115"
         } else if(category == "Endurance") {
-            return "blue"
+            return "#4950d1"
         } else if(category == "Balance") {
-            return "green"
+            return "#4d9943"
         }
     }
 
@@ -73,14 +77,15 @@ function Classes({navigation}) {
         <>
             <MyView>
                 <Card>
+                    <Card.Title style={{marginBottom: 0}}> Weekly Classes</Card.Title>
                   <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                    <Button title="Strength" color="red" style={{flex: 1}} onPress={() => filterClasses("Strength")}/>
-                    <Button title="Endurance" color="blue" style={{flex: 1}}  onPress={() => filterClasses("Endurance")}/>
-                    <Button title="Balance" color="green" style={{flex: 1}}  onPress={() => filterClasses("Balance")}/>
+                    <Button title="Strength" color="#d12115" style={{flex: 1}} onPress={() => filterClasses("Strength")}/>
+                    <Button title="Endurance" color="#4950d1" style={{flex: 1}}  onPress={() => filterClasses("Endurance")}/>
+                    <Button title="Balance" color="#4d9943" style={{flex: 1}}  onPress={() => filterClasses("Balance")}/>
                   </View>
                 </Card>
                     {filteredClasses.map(item => (
-                        <Card containerStyle={{padding: 0, borderLeftWidth: 10, borderLeftColor: getCategoryColor(item.category)}}>
+                        <Card containerStyle={{padding: 0, borderLeftWidth: 10, borderLeftColor: getCategoryColor(item.category)}} key={item.id}>
                             <ListItem key={item.id} bottomDivider onPress={() => navigation.navigate("Class", {id: item.id})}>
                                 {/* Loads image from my firebase storage. class id is the same as the image name. */}
                                 <Avatar source={{uri: `https://firebasestorage.googleapis.com/v0/b/shanefyp-e17f7.appspot.com/o/classes%2F${item.id}?alt=media&token=cff1649c-2042-4225-90a3-bb655d6d8b2c`}} />
@@ -99,14 +104,14 @@ function Classes({navigation}) {
                     } 
     
             </MyView>
-            
-            {/* https://github.com/santomegonzalo/react-native-floating-action */}
-            
+                        
             {
+                //https://www.npmjs.com/package/react-native-floating-action
                 userType == "owner" &&
                 <FloatingAction
                     actions={fabActions}
                     onPressItem={handleFab}
+                    color="#2F0B29"
                 />
             }
 

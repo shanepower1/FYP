@@ -20,7 +20,7 @@ function ScheduledClass({route}) {
         route.params.info.bookings.forEach(userId => {
             getUser(userId).then(user => {
                 tempUsers.push(user)
-                alert(userId)
+              
             })
         })  
 
@@ -36,7 +36,7 @@ function ScheduledClass({route}) {
             <Card containerStyle={{padding: 0}}>
                 {
                     bookedUsers.map(item => (
-                        <ListItem>
+                        <ListItem key={item.id}>
                             <ListItem.Content>
                                 <ListItem.Title>
                                     <Text>{item.name}</Text>                      

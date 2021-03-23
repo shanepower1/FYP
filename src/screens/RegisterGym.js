@@ -60,7 +60,6 @@ function RegisterGym({navigation}) {
                 .then(result => { //result contains newly created user information  
                     addUser(result.user.uid, "", "owner", result.user.uid)
                     addGym(name, address1, address2, town, county, phoneNum, result.user.uid)     
-                    alert("Success")
                 }).catch(error => {
                     alert(error.message)
                 })

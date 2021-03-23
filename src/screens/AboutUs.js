@@ -6,7 +6,6 @@ import { getGym } from "functions/database"
 
 function AboutUs() {
     const { gymId } = useAuth()
-
     const [name, setName] = useState("")
     const [address, setAddress] = useState("") 
     const [number, setNumber] = useState("")

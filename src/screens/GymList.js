@@ -55,7 +55,8 @@ function GymList() {
                 alert(error.message)
             })
     }
-
+    //When a user selects a gym from the list an alert will appear
+    //The alert will ask the user whether they want to join the gym.
     function joinAlert(gymId, gymName) {
         Alert.alert(
           gymName,

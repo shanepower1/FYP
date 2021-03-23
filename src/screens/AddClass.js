@@ -34,7 +34,7 @@ function AddClass() {
 
         addClass(userId, name, description, category)
             .then(ref => {
-                uploadImage("classes", ref.id, image).catch(error => {}) // adding image to uploaded room
+                uploadImage("classes", ref.id, image).catch(error => {}) 
                 navigation.navigate("Classes") 
             }).catch(error => {
                 alert(error.message)
@@ -69,7 +69,6 @@ function AddClass() {
                 <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
                 <Input onChangeText={text => setDescription(text)} value={description} multiline={true} label='Description'/> 
                 <Input label="Spaces Available" onChangeText={text => setNumSpaces(text)} value={numSpaces} keyboardType="numeric"/> 
-                <MyImagePicker image={image} setImage={setImage}/>
                 <CheckBox
                     title='Endurance'
                     checked={isEnduranceChecked}
@@ -81,10 +80,11 @@ function AddClass() {
                     onPress={() => handleChecked("strength")}
                 />
                 <CheckBox
-                    title='Balance / Flexibility'
+                    title='Balance / Flexibility / Core'
                     checked={isBalanceChecked}
                     onPress={() => handleChecked("balance")}
                 />
+                <MyImagePicker image={image} setImage={setImage}/>
                 <Button title="Add Class" onPress={handleAdd} buttonStyle={{marginTop: 20}} />
             </Card>   
         </MyView>   

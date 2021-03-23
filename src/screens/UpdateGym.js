@@ -28,7 +28,7 @@ function UpdateGym() {
     function update() {
         updateGym(id, name, address1, address2, town, county, openingHours)
             .then(() => {
-                alert("Success!")
+                alert("Gym Information updated!")
             }).catch(error => {
                 alert(error.message)
             })

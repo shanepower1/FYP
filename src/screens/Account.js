@@ -23,6 +23,16 @@ function Account ({navigation}){
                     </ListItem.Content>
                     <ListItem.Chevron size={chevronSize}/>
                 </ListItem>
+
+                {userType == "standard" && 
+                    <ListItem onPress={() => navigation.navigate("My Bookings")} bottomDivider style={{fontSize: 50}}>
+                        <ListItem.Content>
+                            <ListItem.Title style={styles.title}>My Bookings</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtitle}>View details about your class bookings</ListItem.Subtitle>
+                        </ListItem.Content>
+                        <ListItem.Chevron size={chevronSize}/>
+                    </ListItem>
+                }
                 
                 {userType == "owner" ? 
                 <ListItem onPress={() => navigation.navigate("Update Gym")} bottomDivider>

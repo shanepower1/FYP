@@ -25,6 +25,7 @@ import ScheduledClass from "screens/ScheduledClass"
 import GymList from "screens/GymList"
 import AboutUs from "screens/AboutUs"
 import UserHome from "screens/UserHome"
+import MyBookings from "screens/MyBookings"
 
 const Stack = createStackNavigator()
 const Tab = createMaterialTopTabNavigator()
@@ -71,9 +72,6 @@ function TabNavigation() {
       <Tab.Screen name="Event List" component={EventList} options={{
         tabBarIcon: () => <FontAwesome5 name="calendar-alt" size={iconSize} color={iconColor} />
       }}/> 
-      <Tab.Screen name="Account" component={Account} options={{
-        tabBarIcon: () => <FontAwesome5 name="user-alt" size={iconSize} color={iconColor} />
-      }}/> 
     </Tab.Navigator>
   )
 }
@@ -117,6 +115,7 @@ function Navigation() {
                 />
                 <Stack.Screen name="Event" component={Event} />
                 <Stack.Screen name="Class" component={Class} />
+                <Stack.Screen name="Account" component={Account} />
               </>
             }
             {
@@ -124,6 +123,7 @@ function Navigation() {
               userType === "standard" &&
               <>
                 <Stack.Screen name="About Us" component={AboutUs} />
+                <Stack.Screen name="My Bookings" component={MyBookings} />              
               </>
             }
             {
