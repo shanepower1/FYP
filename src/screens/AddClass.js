@@ -1,94 +1,117 @@
-import React, { useState, useEffect } from "react"
-import { Text, Input, Card, Button, Image, CheckBox } from "react-native-elements"
-import MyView from "components/MyView"
-import { addClass } from "functions/database"
-import { useNavigation } from '@react-navigation/native'
-import { auth } from "../firebase"
-import MyImagePicker from "components/MyImagePicker"
-import { uploadImage } from "functions/storage"
-import { useAuth } from "components/AuthContext"
+import React, { useState } from "react";
+import { Input, Card, Button, CheckBox } from "react-native-elements";
+
+import MyView from "components/MyView";
+import MyImagePicker from "components/MyImagePicker";
+import { addClass } from "functions/database";
+import { uploadImage } from "functions/storage";
+import { useAuth } from "components/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 function AddClass() {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [numSpaces, setNumSpaces] = useState("")
-    const [isBalanceChecked, setIsBalanceChecked] = useState(false)
-    const [isEnduranceChecked, setIsEnduranceChecked] = useState(false)
-    const [isStrengthChecked, setIsStrengthChecked] = useState(false)
-    const [category, setCategory] = useState(null)
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [numSpaces, setNumSpaces] = useState("");
+  const [category, setCategory] = useState(null);
 
-    const navigation = useNavigation() // Only screen components receive navigation as a prop. 
-    const { userId } = useAuth()
+  // Variables to store whether checkboxes are selected or not.
+  const [isBalanceChecked, setIsBalanceChecked] = useState(false);
+  const [isEnduranceChecked, setIsEnduranceChecked] = useState(false);
+  const [isStrengthChecked, setIsStrengthChecked] = useState(false);
 
-    const [image, setImage] = useState(null)
+  const navigation = useNavigation(); // Allows access to navigation functionality.
+  const { userId } = useAuth(); // userId retrieved from AuthContext.
 
-    // code acquired from the following: https://medium.com/@wcandillon/uploading-images-to-firebase-with-expo-a913c9f8e98d
+  const [image, setImage] = useState(null);
 
-
-
-    function handleAdd() {
-        if(!category) {
-            alert("Please select a category")
-            return
-        }
-
-        addClass(userId, name, description, category)
-            .then(ref => {
-                uploadImage("classes", ref.id, image).catch(error => {}) 
-                navigation.navigate("Classes") 
-            }).catch(error => {
-                alert(error.message)
-            })
+  // Handles form submit.
+  function handleAdd() {
+    // If no category is selected prompt user, else add to database and upload image.
+    if (!category) {
+      alert("Please select a category");
+    } else {
+      addClass(userId, name, description, category)
+        .then((ref) => {
+          // Reference to newly created document we then use documents id to name the picture.
+          // Upload image code in functions/storage.
+          uploadImage("classes", ref.id, image).catch((error) => {});
+          navigation.navigate("Classes");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     }
+  }
 
-    function handleChecked(option) {
-        setIsBalanceChecked(false)
-        setIsEnduranceChecked(false)
-        setIsStrengthChecked(false)
+  // Handles checkboxes. It unselects all of them, and reselects the newest one. So only one can be selected at a time.
+  function handleChecked(option) {
+    setIsBalanceChecked(false);
+    setIsEnduranceChecked(false);
+    setIsStrengthChecked(false);
 
-        switch(option) {
-            case "endurance": 
-                setIsEnduranceChecked(true)
-                setCategory("Endurance")
-                break
-            case "strength": 
-                setIsStrengthChecked(true)
-                setCategory("Strength")
-                break
-            case "balance": 
-                setIsBalanceChecked(true)
-                setCategory("Balance")
-                break
-        }
+    switch (option) {
+      case "endurance":
+        setIsEnduranceChecked(true);
+        setCategory("Endurance");
+        break;
+      case "strength":
+        setIsStrengthChecked(true);
+        setCategory("Strength");
+        break;
+      case "balance":
+        setIsBalanceChecked(true);
+        setCategory("Balance");
+        break;
     }
+  }
 
+  return (
+    <MyView>
+      <Card>
+        <Input
+          onChangeText={(text) => setName(text)}
+          value={name}
+          label="Name"
+        />
+        <Input
+          onChangeText={(text) => setDescription(text)}
+          value={description}
+          multiline={true}
+          label="Description"
+        />
+        <Input
+          onChangeText={(text) => setNumSpaces(text)}
+          value={numSpaces}
+          keyboardType="numeric"
+          label="Spaces Available"
+        />
 
-    return (
-        <MyView>
-            <Card>
-                <Input onChangeText={text => setName(text)} value={name} label='Name'/> 
-                <Input onChangeText={text => setDescription(text)} value={description} multiline={true} label='Description'/> 
-                <Input label="Spaces Available" onChangeText={text => setNumSpaces(text)} value={numSpaces} keyboardType="numeric"/> 
-                <CheckBox
-                    title='Endurance'
-                    checked={isEnduranceChecked}
-                    onPress={() => handleChecked("endurance")}
-                />
-                <CheckBox
-                    title='Strength'
-                    checked={isStrengthChecked}
-                    onPress={() => handleChecked("strength")}
-                />
-                <CheckBox
-                    title='Balance / Flexibility / Core'
-                    checked={isBalanceChecked}
-                    onPress={() => handleChecked("balance")}
-                />
-                <MyImagePicker image={image} setImage={setImage}/>
-                <Button title="Add Class" onPress={handleAdd} buttonStyle={{marginTop: 20}} />
-            </Card>   
-        </MyView>   
-    )
+        {/* https://reactnativeelements.com/docs/checkbox/ */}
+        <CheckBox
+          title="Endurance"
+          checked={isEnduranceChecked}
+          onPress={() => handleChecked("endurance")}
+        />
+        <CheckBox
+          title="Strength"
+          checked={isStrengthChecked}
+          onPress={() => handleChecked("strength")}
+        />
+        <CheckBox
+          title="Balance / Flexibility / Core"
+          checked={isBalanceChecked}
+          onPress={() => handleChecked("balance")}
+        />
+
+        <MyImagePicker image={image} setImage={setImage} />
+        <Button
+          title="Add Class"
+          onPress={() => handleAdd()}
+          buttonStyle={{ marginTop: 20 }}
+        />
+      </Card>
+    </MyView>
+  );
 }
 
-export default AddClass
+export default AddClass;
