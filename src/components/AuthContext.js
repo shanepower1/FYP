@@ -7,7 +7,7 @@ import { auth } from "src/firebase.js";
 const AuthContext = React.createContext();
 
 // Importing this in any component gives us access to the variables in AuthProvider.
-/* 
+/* EG.
     import { useAuth } from "components/AuthContext"
     const { userId, gymName } = useAuth()
 */
@@ -17,6 +17,7 @@ export function useAuth() {
 }
 
 // AuthProvider shares these variables globally.
+//These are the varaible in which i want to share globally on the app
 export default function AuthProvider({ children }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -47,7 +48,7 @@ export default function AuthProvider({ children }) {
   // Loads users data from the database.
   async function loadData(userId) {
     try {
-      // Delays for 1000ms so new users can be finished creating. If we don't do this it can cause errors.
+      // Delays for 1000ms so new users can be finished creating. If I don't do this it can cause errors.
       await delay(1000);
 
       // getUser function is imported from database.js.
@@ -55,10 +56,10 @@ export default function AuthProvider({ children }) {
 
       /* 
                 If user has a gymId, they are either an gym owner or a user who has signed up to a gym. 
-                So we load the gyms information. If the user doesn't have a gymId, there is no reason to load this. 
+                So the gyms information would be loaded.. If the user doesn't have a gymId, there is no reason to load this. 
             */
       if (userInfo.gymId != null) {
-        // getGym is imported from firebase.js, it retrieves the information about a single gym form the database.
+        // getGym is imported from firebase.js, it retrieves the information about a single gym from the database.
         let gymInfo = await getGym(userInfo.gymId);
 
         // Sets gymName and GymId variables which can then be accessed globablly.

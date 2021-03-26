@@ -8,19 +8,25 @@ import MyView from "components/MyView";
 import { getClasses } from "functions/database";
 import { useAuth } from "components/AuthContext";
 
+// https://reactjs.org/docs/hooks-state.html
+  // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page.
+  // "set" function is used to update the state in the future when changed.
+  // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
+
 function Classes() {
   const [classes, setClasses] = useState([]);
   const [filteredClasses, setFilteredClasses] = useState([]);
   const { gymId, userType } = useAuth(); // Allows access to gymId and userType variables from AuthContext.
   const navigation = useNavigation(); // Allows access to navigation functionality.
 
-
+ //Loads data once
   useEffect(() => {
     getData();
   }, []);
 
   function getData() {
-    // Calling getClasses from database.js.
+      // https://firebase.google.com/docs/firestore/query-data/get-data.
+      // Calling getClasses from database.js.
     getClasses(gymId)
       .then((result) => {
         setClasses(result);
@@ -61,6 +67,7 @@ function Classes() {
   }
 
   // Takes in the category name and returns the correct colour.
+  //Simple IF statements for which colour to return
   function getCategoryColor(category) {
     if (category == "Strength") {
       return "#d12115";
@@ -103,7 +110,7 @@ function Classes() {
               onPress={() => filterClasses("Endurance")}
             />
             <Button
-              title="Balance"
+              title="Balance/Flexibility/Core"
               color="#4d9943"
               style={{ flex: 1 }}
               onPress={() => filterClasses("Balance")}

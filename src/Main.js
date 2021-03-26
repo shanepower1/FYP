@@ -22,11 +22,13 @@ export default function Main() {
   return (
  
     //https://reactnativeelements.com/docs/customization/
+    /* AuthProvider Imported from auth context. This allows the variables stored there to be accessed globally. */
+    /* StatusBar is an Expo component. Controls status bar(the bar on top of the screen with battery, reception etc. ) */
     <ThemeProvider theme={theme}>
-      <AuthProvider> {/* Imported from auth context. This allows the variables stored there to be accessed globally. */}
+      <AuthProvider> 
         <Navigation />
       </AuthProvider>
-      <StatusBar style="light" translucent={false} /> { /* Expo component. Controls status bar(the bar on top of the screen with battery, reception etc. ) */}
+      <StatusBar style="light" translucent={false} /> 
     </ThemeProvider>
   );
 }

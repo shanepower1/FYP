@@ -1,5 +1,8 @@
 import { db, auth } from "../firebase";
 
+//All my db functions are stored here and are called throughout the application.
+
+
 // Gets a user document from the database.
 export async function getUser(userId) {
   // Looks in the users collection and retrieves doc with id of userId.
@@ -240,13 +243,14 @@ export async function bookClass(scheduleId, userId) {
   // If it's not in the bookings array their id is then added.
   if (!bookings.includes(userId)) {
     bookings.push(userId);
+    
 
     // Updating the scheduled class with the new bookings array which now contains the user's id.
     await db.collection("schedule").doc(scheduleId).update({
       bookings: bookings,
     });
 
-    // We also update the users own schedule with the scheduledClass id.
+    // Here I also update the users own schedule with the scheduledClass id.
     let user = await getUser(auth.currentUser.uid);
     let schedule = user.schedule;
 

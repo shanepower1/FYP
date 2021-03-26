@@ -17,6 +17,7 @@ function Event({ route }) {
     loadInfo();
   }, []);
 
+  // https://firebase.google.com/docs/firestore/query-data/get-data.
   function loadInfo() {
     getEvent(route.params.eventId)
       .then((event) => {

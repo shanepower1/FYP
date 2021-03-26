@@ -6,7 +6,7 @@ import MyView from "components/MyView";
 import { useAuth } from "components/AuthContext";
 
 function Account({ navigation }) {
-  const { userType } = useAuth();
+  const { userType } = useAuth(); //Acessing userType from auth context
 
   return (
     <MyView>
@@ -25,7 +25,7 @@ function Account({ navigation }) {
           <ListItem.Chevron size={30} />
         </ListItem>
 
-        {userType == "standard" && ( // Only displayed for standard users.
+        {userType == "standard" && ( // Only displayed for standard users. Conditional rendering
           <ListItem
             onPress={() => navigation.navigate("My Bookings")}
             bottomDivider
@@ -41,7 +41,7 @@ function Account({ navigation }) {
           </ListItem>
         )}
 
-        {userType == "owner" && ( // Only displayed for owners.
+        {userType == "owner" && ( // Only displayed for owners. Conditional rendering
           <ListItem
             onPress={() => navigation.navigate("Update Gym")}
             bottomDivider

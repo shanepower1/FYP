@@ -65,7 +65,8 @@ function GymList() {
     );
   }
 
-  // Signs user up for gym. 
+  // Signs user up for gym.
+  //Calls the joinGym function from database.js 
   function handleJoinGym(gymId, gymName) {
     joinGym(userId, gymId)
       .then(() => {

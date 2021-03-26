@@ -35,7 +35,7 @@ function TabNavigation() {
 
   const iconSize = 24;
   const iconColor = "white";
-
+//https://reactnavigation.org/docs/tab-based-navigation/
   return (
     <Tab.Navigator
       tabBarPosition="bottom"
@@ -110,7 +110,7 @@ function TabNavigation() {
 // Screens for when user is not signed in.
 function Navigation() {
   const { isSignedIn, userType, gymName, gymId } = useAuth();
-
+  //https://reactnavigation.org/docs/stack-navigator/
   return (
     <NavigationContainer>
       <Stack.Navigator mode="modal">

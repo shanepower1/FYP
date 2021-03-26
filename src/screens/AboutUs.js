@@ -5,6 +5,10 @@ import MyView from "components/MyView";
 import { useAuth } from "components/AuthContext";
 import { getGym } from "functions/database";
 
+// https://reactjs.org/docs/hooks-state.html
+  // React keeps track of these variables. If they are changed, any part of the UI uses these values will also be updated without having to refresh the page.
+  // "set" function is used to update the state in the future when changed.
+  // https://www.youtube.com/watch?v=1FiIYaRr148 . I found this youtube video explained the concept very well.
 function AboutUs() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -14,7 +18,9 @@ function AboutUs() {
   // Accessing gymId variables from AuthContext
   const { gymId } = useAuth();
 
-  // onLoad we retrieve this gyms information form the database.
+  // onLoad I retrieve this gyms information from the database.
+    // https://firebase.google.com/docs/firestore/query-data/get-data.
+
   useEffect(() => {
     getGym(gymId) // Same variable as above, retrieved from AuthContext
       .then((gym) => {
@@ -27,7 +33,7 @@ function AboutUs() {
       })
       .catch();
   }, []);
-
+//Displaying the below values
   return (
     <MyView>
       <Card>

@@ -28,7 +28,7 @@ function MyBookings() {
             date: booking.date,
           }; // Contains the name of the class, and the scheduled time for the class. 
 
-          info.push(temp); // Push this to info array so we can display to the user all their class bookings. 
+          info.push(temp); // Push this to info array so the user will be able to see their class bookings. 
         });
       });
     });

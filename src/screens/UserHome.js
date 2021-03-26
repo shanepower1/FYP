@@ -17,14 +17,14 @@ function UserHome() {
   useEffect(() => {
     getData();
   }, []);
-
+  // https://firebase.google.com/docs/firestore/query-data/get-data.
   function getData() {
     getGym(gymId).then((gym) => {
       setGymId(gym.id);
       setGymName(gym.name);
     });
   }
-
+//https://reactnative.dev/docs/touchableopacity. Link to code for touchable opacity.
   return (
     <MyView>
       <TouchableOpacity onPress={() => navigation.navigate("About Us")}>

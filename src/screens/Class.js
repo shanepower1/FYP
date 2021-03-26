@@ -41,6 +41,8 @@ function Class({ route }) {
 
   function loadInfo() {
     // Retrieves class document from database and sets values.
+    // https://firebase.google.com/docs/firestore/query-data/get-data.
+
     getClass(route.params.id)
       .then((classInfo) => {
         setName(classInfo.name);
@@ -71,6 +73,7 @@ function Class({ route }) {
   }
 
   // Deletes class from database.
+    //https://firebase.google.com/docs/firestore/manage-data/delete-data.
   function remove() {
     deleteClass(route.params.id)
       .then(() => {
@@ -93,6 +96,8 @@ function Class({ route }) {
   }
 
   // Removes a specific timeslot from this class.
+ //https://firebase.google.com/docs/firestore/manage-data/delete-data.
+
   function removeSchedule(id) {
     deleteSchedule(id)
       .then(() => {
@@ -146,7 +151,7 @@ function Class({ route }) {
                 <ListItem.Subtitle></ListItem.Subtitle>
               </ListItem.Content>
               {
-                // If user is an owner we show the delete button. If they are a standard user they see either a book button or "already booked" text
+                // If user is an owner the delete button will be shown. If they are a standard user they see either a book button or "already booked" text
                 userType == "owner" ? (
                   <Button title="X" onPress={() => removeSchedule(item.id)} />
                 ) : item.alreadyBooked ? (
@@ -160,7 +165,7 @@ function Class({ route }) {
         ))}
       </Card>
       {
-        // If user type is owner we show components that let them schedule classes.
+        // If user type is owner thecomponents that let them schedule classes will be displayed.
         userType == "owner" && (
           <>
             <Card>
